@@ -32,7 +32,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = true, length = 50)
+    @Column(name = "email", nullable = true, length = 50, unique = true)
     public String getEmail() {
         return email;
     }
