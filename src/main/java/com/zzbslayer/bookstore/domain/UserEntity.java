@@ -9,7 +9,6 @@ public class UserEntity {
     private String pw;
     private String email;
     private String phone;
-    private String permission;
 
     @Id
     @Column(name = "username", nullable = false, length = 20)
@@ -22,7 +21,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "pw", nullable = true, length = 20)
+    @Column(name = "pw", nullable = false, length = 20)
     public String getPw() {
         return pw;
     }
@@ -32,7 +31,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "email", nullable = true, length = 50, unique = true)
+    @Column(name = "email", nullable = false, length = 50, unique = true)
     public String getEmail() {
         return email;
     }
@@ -42,23 +41,13 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "phone", nullable = true, precision = 0)
+    @Column(name = "phone", nullable = false, precision = 0)
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    @Basic
-    @Column(name = "permission", nullable = true, length = 10)
-    public String getPermission() {
-        return permission;
-    }
-
-    public void setPermission(String permission) {
-        this.permission = permission;
     }
 
     @Override
@@ -72,7 +61,6 @@ public class UserEntity {
         if (pw != null ? !pw.equals(that.pw) : that.pw != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (permission != null ? !permission.equals(that.permission) : that.permission != null) return false;
 
         return true;
     }
@@ -83,7 +71,6 @@ public class UserEntity {
         result = 31 * result + (pw != null ? pw.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (permission != null ? permission.hashCode() : 0);
         return result;
     }
 }
