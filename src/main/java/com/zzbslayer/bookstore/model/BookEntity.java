@@ -1,4 +1,4 @@
-package com.zzbslayer.bookstore.domain;
+package com.zzbslayer.bookstore.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

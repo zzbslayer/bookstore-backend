@@ -19,10 +19,11 @@
         <property name="show_sql">true</property>
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="com.zzbslayer.bookstore.domain.BookEntity"/>
-        <mapping class="com.zzbslayer.bookstore.domain.BookImageEntity"/>
-        <mapping class="com.zzbslayer.bookstore.domain.AddressEntity"/>
-        <mapping class="com.zzbslayer.bookstore.domain.UserEntity"/>
-        <mapping class="com.zzbslayer.bookstore.domain.UserStatusEntity"/>
+        <mapping class="com.zzbslayer.bookstore.model.BookEntity"/>
+        <mapping class="com.zzbslayer.bookstore.model.BookImageEntity"/>
+        <mapping class="com.zzbslayer.bookstore.model.AddressEntity"/>
+        <mapping class="com.zzbslayer.bookstore.model.UserEntity"/>
+        <mapping class="com.zzbslayer.bookstore.model.RoleEntity"/>
+        <mapping class="com.zzbslayer.bookstore.model.UserStatusEntity"/>
     </session-factory>
 </hibernate-configuration>

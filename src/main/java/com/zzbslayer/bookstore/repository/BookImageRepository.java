@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.repository;
 
-import com.zzbslayer.bookstore.domain.BookImageEntity;
+import com.zzbslayer.bookstore.model.BookImageEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

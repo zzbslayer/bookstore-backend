@@ -1,5 +1,6 @@
 # Bookstore Backend
 ## Programme Structure
 - Springboot
-- Sprintdata jpa
+- Springdata JPA
+- Spring Security
 - Mysql

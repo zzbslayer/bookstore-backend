@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.domain.AddressEntity;
+import com.zzbslayer.bookstore.model.AddressEntity;
 import com.zzbslayer.bookstore.service.AddressService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;

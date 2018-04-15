@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.domain.UserStatusEntity;
+import com.zzbslayer.bookstore.model.UserStatusEntity;
 import com.zzbslayer.bookstore.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

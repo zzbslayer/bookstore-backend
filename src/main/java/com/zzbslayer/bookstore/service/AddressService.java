@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.domain.AddressEntity;
+import com.zzbslayer.bookstore.model.AddressEntity;
 import com.zzbslayer.bookstore.repository.AddressRepository;
 import org.springframework.stereotype.Service;
 

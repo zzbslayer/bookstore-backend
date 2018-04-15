@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.domain.UserEntity;
+import com.zzbslayer.bookstore.model.UserEntity;
 import com.zzbslayer.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +20,9 @@ public class UserController {
     @RequestMapping(value="/users")
     @ResponseBody
     public JSONArray findAll(){
-        List<UserEntity> users = userService.findAll();
-        System.out.println(JSONArray.fromObject(users));
-        return JSONArray.fromObject(users);
+        List<UserEntity> roles = userService.findAll();
+        System.out.println(JSONArray.fromObject(roles));
+        return JSONArray.fromObject(roles);
     }
 
     @RequestMapping(value="/users/by/email/{email}")

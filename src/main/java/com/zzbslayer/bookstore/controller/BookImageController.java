@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.domain.BookImageEntity;
+import com.zzbslayer.bookstore.model.BookImageEntity;
 import com.zzbslayer.bookstore.service.BookImageService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
