@@ -24,4 +24,5 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer > {
     List<BookEntity> findByAutherContains(String auther);
 
     List<BookEntity> findByLang(String lang);
+
 }

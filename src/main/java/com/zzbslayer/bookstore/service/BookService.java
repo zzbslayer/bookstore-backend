@@ -43,4 +43,12 @@ public class BookService {
     public List<BookEntity> findByBooknameContains(String bookname){
         return userRepository.findByBooknameContains(bookname);
     }
+
+    public List<BookEntity> VagueFind(String msg){
+        List<BookEntity> array1 = userRepository.findByBooknameContains(msg);
+        List<BookEntity> array2 = userRepository.findByAutherContains(msg);
+        array1.removeAll(array2);
+        array1.addAll(array2);
+        return array1;
+    }
 }

@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface AddressRepository extends JpaRepository<AddressEntity, Integer> {
+    List<AddressEntity> findAll();
+
     List<AddressEntity> findByUsername(String username);
 }

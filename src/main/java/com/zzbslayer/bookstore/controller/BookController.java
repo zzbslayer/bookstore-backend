@@ -6,18 +6,16 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping(value="/api")
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
-    @RequestMapping(value="/books")
+    @GetMapping(value="/books")
     @ResponseBody
     public JSONArray findAll(){
         List<BookEntity> books = bookService.findAll();
@@ -25,31 +23,38 @@ public class BookController {
         return JSONArray.fromObject(books);
     }
 
-    @RequestMapping(value="/books/by/bookid/{bookid}")
+    @GetMapping(value="/books/bookid/{bookid}")
     @ResponseBody
     public JSONObject findByBookid(@PathVariable Integer bookid) {
         BookEntity book = bookService.findByBookid(bookid);
         return JSONObject.fromObject(book);
     }
 
-    @RequestMapping(value="/books/bookname/{bookname}")
+    @GetMapping(value="/books/bookname/{bookname}")
     @ResponseBody
     public JSONArray findByBookname(@PathVariable String bookname) {
         List<BookEntity> books = bookService.findByBooknameContains(bookname);
         return JSONArray.fromObject(books);
     }
 
-    @RequestMapping(value="/books/auther/{auther}")
+    @GetMapping(value="/books/auther/{auther}")
     @ResponseBody
     public JSONArray findByAuther(@PathVariable String auther) {
         List<BookEntity> books = bookService.findByAutherContains(auther);
         return JSONArray.fromObject(books);
     }
 
-    @RequestMapping(value="/books/language/{lang}")
+    @GetMapping(value="/books/language/{lang}")
     @ResponseBody
     public JSONArray findByLang(@PathVariable String lang) {
         List<BookEntity> books = bookService.findByLang(lang);
+        return JSONArray.fromObject(books);
+    }
+
+    @GetMapping(value="/books/{msg}")
+    @ResponseBody
+    public JSONArray VagueFind(@PathVariable String msg){
+        List<BookEntity> books = bookService.VagueFind(msg);
         return JSONArray.fromObject(books);
     }
 

@@ -9,9 +9,9 @@ import java.math.BigInteger;
 public class AddressEntity {
     private String username;
     private BigInteger addressid;
-    private String shippingAddress;
+    private String shippingaddress;
     private String recipient;
-    private Integer phone;
+    private String phone;
 
     @Id
     @Column(name = "username", nullable = false, length = 20)
@@ -34,13 +34,13 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "shippingAddress", nullable = true, length = 500)
-    public String getShippingAddress() {
-        return shippingAddress;
+    @Column(name = "shippingaddress", nullable = true, length = 500)
+    public String getShippingaddress() {
+        return shippingaddress;
     }
 
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setShippingaddress(String shippingaddress) {
+        this.shippingaddress = shippingaddress;
     }
 
     @Basic
@@ -54,12 +54,12 @@ public class AddressEntity {
     }
 
     @Basic
-    @Column(name = "phone", nullable = true, precision = 0)
-    public Integer getPhone() {
+    @Column(name = "phone", nullable = true, length = 11)
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -72,7 +72,7 @@ public class AddressEntity {
 
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
         if (addressid != null ? !addressid.equals(that.addressid) : that.addressid != null) return false;
-        if (shippingAddress != null ? !shippingAddress.equals(that.shippingAddress) : that.shippingAddress != null)
+        if (shippingaddress != null ? !shippingaddress.equals(that.shippingaddress) : that.shippingaddress != null)
             return false;
         if (recipient != null ? !recipient.equals(that.recipient) : that.recipient != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
@@ -84,7 +84,7 @@ public class AddressEntity {
     public int hashCode() {
         int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (addressid != null ? addressid.hashCode() : 0);
-        result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
+        result = 31 * result + (shippingaddress != null ? shippingaddress.hashCode() : 0);
         result = 31 * result + (recipient != null ? recipient.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         return result;
