@@ -41,27 +41,33 @@ public class CustomUserService implements UserDetailsService { // custom UserSer
             throw new UsernameNotFoundException("User Not Found");
         }
 
-        RoleEntity role = roleRepository.findByUsername(username);
+        List<RoleEntity> roles = roleRepository.findByUsername(username);
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority(role.getUsername()));
-        System.out.println(role.getRolename());
+        for (RoleEntity role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getUsername()));
+            System.out.println(role.getRolename());
+        }
 
         return new User(user.getUsername(),
                 encoder.encode(user.getPw()),getGrantedAuthorities(user));
     }
 
-    private Collection<GrantedAuthority> getGrantedAuthorities(UserEntity user){
+    private Collection<GrantedAuthority> getGrantedAuthorities(UserEntity user) {
 
         Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
 
         String username = user.getUsername();
-        RoleEntity role = roleRepository.findByUsername(username);
-        if(role.getRolename().equals("ADMIN")){
-            grantedAuthority.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        List<RoleEntity> roles = roleRepository.findByUsername(username);
+        for (RoleEntity role : roles){
+            if (role.getRolename().equals("ADMIN")) {
+                grantedAuthority.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            }
+            else if (role.getRolename().equals("USER")) {
+                grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
+            }
         }
-        grantedAuthority.add(new SimpleGrantedAuthority("ROLE_USER"));
         return grantedAuthority;
     }
 }

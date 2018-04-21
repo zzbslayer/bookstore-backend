@@ -8,14 +8,14 @@ import java.math.BigDecimal;
 public class BookEntity {
     private int bookid;
     private String bookname;
-    private String auther;
+    private String author;
     private String lang;
     private BigDecimal price;
-    private Integer year;
-    private Integer count;
+    private int year;
+    private int count;
 
     @Id
-    @Column(name = "bookid", nullable = false, precision = 0)
+    @Column(name = "bookid", nullable = false)
     public int getBookid() {
         return bookid;
     }
@@ -25,7 +25,7 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "bookname", nullable = true, length = 70)
+    @Column(name = "bookname", nullable = false, length = 70)
     public String getBookname() {
         return bookname;
     }
@@ -35,17 +35,17 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "auther", nullable = true, length = 40)
-    public String getAuther() {
-        return auther;
+    @Column(name = "author", nullable = false, length = 40)
+    public String getAuthor() {
+        return author;
     }
 
-    public void setAuther(String auther) {
-        this.auther = auther;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Basic
-    @Column(name = "lang", nullable = true, length = 20)
+    @Column(name = "lang", nullable = false, length = 20)
     public String getLang() {
         return lang;
     }
@@ -55,7 +55,7 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "price", nullable = true, precision = 2)
+    @Column(name = "price", nullable = false, precision = 2)
     public BigDecimal getPrice() {
         return price;
     }
@@ -65,22 +65,22 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "year", nullable = true, precision = 0)
-    public Integer getYear() {
+    @Column(name = "year", nullable = false, precision = 0)
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
     @Basic
-    @Column(name = "count", nullable = true, precision = 0)
-    public Integer getCount() {
+    @Column(name = "count", nullable = false, precision = 0)
+    public int getCount() {
         return count;
     }
 
-    public void setCount(Integer count) {
+    public void setCount(int count) {
         this.count = count;
     }
 
@@ -92,12 +92,12 @@ public class BookEntity {
         BookEntity that = (BookEntity) o;
 
         if (bookid != that.bookid) return false;
+        if (year != that.year) return false;
+        if (count != that.count) return false;
         if (bookname != null ? !bookname.equals(that.bookname) : that.bookname != null) return false;
-        if (auther != null ? !auther.equals(that.auther) : that.auther != null) return false;
+        if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (lang != null ? !lang.equals(that.lang) : that.lang != null) return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
-        if (year != null ? !year.equals(that.year) : that.year != null) return false;
-        if (count != null ? !count.equals(that.count) : that.count != null) return false;
 
         return true;
     }
@@ -106,11 +106,11 @@ public class BookEntity {
     public int hashCode() {
         int result = bookid;
         result = 31 * result + (bookname != null ? bookname.hashCode() : 0);
-        result = 31 * result + (auther != null ? auther.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (lang != null ? lang.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (year != null ? year.hashCode() : 0);
-        result = 31 * result + (count != null ? count.hashCode() : 0);
+        result = 31 * result + year;
+        result = 31 * result + count;
         return result;
     }
 }

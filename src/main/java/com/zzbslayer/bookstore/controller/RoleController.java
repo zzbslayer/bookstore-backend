@@ -26,9 +26,9 @@ public class RoleController {
 
     @GetMapping(value="/roles/by/email/{email}")
     @ResponseBody
-    public JSONObject findByUsername(@PathVariable String username) {
-        RoleEntity role = roleService.findByUsername(username);
-        return JSONObject.fromObject(role);
+    public JSONArray findByUsername(@PathVariable String username) {
+        List<RoleEntity> role = roleService.findByUsername(username);
+        return JSONArray.fromObject(role);
     }
 
     @GetMapping(value="/roles/by/rolename/{rolename}")

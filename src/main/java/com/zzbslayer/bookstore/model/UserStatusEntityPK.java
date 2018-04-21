@@ -1,17 +1,15 @@
 package com.zzbslayer.bookstore.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "userstatus", schema = "bookstore", catalog = "")
-@IdClass(UserStatusEntityPK.class)
-public class UserStatusEntity {
+public class UserStatusEntityPK implements Serializable {
     private int statusid;
     private String username;
-    private String userStatus;
 
-    @Id
     @Column(name = "statusid", nullable = false)
+    @Id
     public int getStatusid() {
         return statusid;
     }
@@ -20,8 +18,8 @@ public class UserStatusEntity {
         this.statusid = statusid;
     }
 
-    @Id
     @Column(name = "username", nullable = false, length = 20)
+    @Id
     public String getUsername() {
         return username;
     }
@@ -30,26 +28,15 @@ public class UserStatusEntity {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "user_status", nullable = false, length = 10)
-    public String getUserStatus() {
-        return userStatus;
-    }
-
-    public void setUserStatus(String userStatus) {
-        this.userStatus = userStatus;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserStatusEntity that = (UserStatusEntity) o;
+        UserStatusEntityPK that = (UserStatusEntityPK) o;
 
         if (statusid != that.statusid) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (userStatus != null ? !userStatus.equals(that.userStatus) : that.userStatus != null) return false;
 
         return true;
     }
@@ -58,7 +45,6 @@ public class UserStatusEntity {
     public int hashCode() {
         int result = statusid;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (userStatus != null ? userStatus.hashCode() : 0);
         return result;
     }
 }

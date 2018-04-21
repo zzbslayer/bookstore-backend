@@ -16,7 +16,7 @@ public class RoleService {
         return roleRepository.findAll();
     }
 
-    public RoleEntity findByUsername(String username){
+    public List<RoleEntity> findByUsername(String username){
         return roleRepository.findByUsername(username);
     }
 

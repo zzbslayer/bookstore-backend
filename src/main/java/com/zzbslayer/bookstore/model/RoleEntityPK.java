@@ -1,17 +1,15 @@
 package com.zzbslayer.bookstore.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "roles", schema = "bookstore", catalog = "")
-@IdClass(RoleEntityPK.class)
-public class RoleEntity {
+public class RoleEntityPK implements Serializable {
     private int roleid;
     private String username;
-    private String rolename;
 
-    @Id
     @Column(name = "roleid", nullable = false)
+    @Id
     public int getRoleid() {
         return roleid;
     }
@@ -20,8 +18,8 @@ public class RoleEntity {
         this.roleid = roleid;
     }
 
-    @Id
     @Column(name = "username", nullable = false, length = 20)
+    @Id
     public String getUsername() {
         return username;
     }
@@ -30,26 +28,15 @@ public class RoleEntity {
         this.username = username;
     }
 
-    @Basic
-    @Column(name = "rolename", nullable = false, length = 10)
-    public String getRolename() {
-        return rolename;
-    }
-
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RoleEntity that = (RoleEntity) o;
+        RoleEntityPK that = (RoleEntityPK) o;
 
         if (roleid != that.roleid) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (rolename != null ? !rolename.equals(that.rolename) : that.rolename != null) return false;
 
         return true;
     }
@@ -58,7 +45,6 @@ public class RoleEntity {
     public int hashCode() {
         int result = roleid;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (rolename != null ? rolename.hashCode() : 0);
         return result;
     }
 }

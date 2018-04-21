@@ -3,11 +3,20 @@ package com.zzbslayer.bookstore.model;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.math.BigInteger;
 
 public class AddressEntityPK implements Serializable {
+    private int addressid;
     private String username;
-    private BigInteger addressid;
+
+    @Column(name = "addressid", nullable = false)
+    @Id
+    public int getAddressid() {
+        return addressid;
+    }
+
+    public void setAddressid(int addressid) {
+        this.addressid = addressid;
+    }
 
     @Column(name = "username", nullable = false, length = 20)
     @Id
@@ -19,16 +28,6 @@ public class AddressEntityPK implements Serializable {
         this.username = username;
     }
 
-    @Column(name = "addressid", nullable = false, precision = 0)
-    @Id
-    public BigInteger getAddressid() {
-        return addressid;
-    }
-
-    public void setAddressid(BigInteger addressid) {
-        this.addressid = addressid;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,16 +35,16 @@ public class AddressEntityPK implements Serializable {
 
         AddressEntityPK that = (AddressEntityPK) o;
 
+        if (addressid != that.addressid) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
-        if (addressid != null ? !addressid.equals(that.addressid) : that.addressid != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (addressid != null ? addressid.hashCode() : 0);
+        int result = addressid;
+        result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
     }
 }
