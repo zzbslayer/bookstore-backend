@@ -13,15 +13,15 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer > {
 
     BookEntity findByBookid(Integer id);
 
-    List<BookEntity> findByBooknameAndAutherAndLang(String bookname,String auther,String lang);
+    List<BookEntity> findByBooknameAndAuthorAndLang(String bookname,String auther,String lang);
 
     List<BookEntity> findByBookname(String bookname);
 
     List<BookEntity> findByBooknameContains(String bookname);
 
-    List<BookEntity> findByAuther(String auther);
+    List<BookEntity> findByAuthor(String auther);
 
-    List<BookEntity> findByAutherContains(String auther);
+    List<BookEntity> findByAuthorContains(String auther);
 
     List<BookEntity> findByLang(String lang);
 

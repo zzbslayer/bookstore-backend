@@ -27,13 +27,23 @@ public class BookImageController {
     @ResponseBody
     public JSONArray findAll(){
         List<BookImageEntity> images = bookImageService.findAll();
-        System.out.println(JSONArray.fromObject(images));
-        return JSONArray.fromObject(images);
+        JSONArray result = JSONArray.fromObject(images);
+        logger.debug(result.toString());
+        return result;
     }
 
     @GetMapping(value="/bookimages/bookid/{bookid}")
     @ResponseBody
-    public JSONArray findByBookid(@PathVariable String bookid){
+    public JSONObject findByBookid(@PathVariable Integer bookid){
+        BookImageEntity image = bookImageService.findByBookid(bookid);
+        JSONObject result = JSONObject.fromObject(image);
+        logger.debug(result.toString());
+        return result;
+    }
+
+    @GetMapping(value="/bookimages/bookids/{bookid}")
+    @ResponseBody
+    public JSONArray findByBookids(@PathVariable String bookid){
         bookid = bookid.replace("[","");
         bookid = bookid.replace("]","");
         String[] temp = bookid.split(",");

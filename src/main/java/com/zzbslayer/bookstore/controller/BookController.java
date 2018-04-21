@@ -37,10 +37,10 @@ public class BookController {
         return JSONArray.fromObject(books);
     }
 
-    @GetMapping(value="/books/auther/{auther}")
+    @GetMapping(value="/books/author/{author}")
     @ResponseBody
-    public JSONArray findByAuther(@PathVariable String auther) {
-        List<BookEntity> books = bookService.findByAutherContains(auther);
+    public JSONArray findByAuther(@PathVariable String author) {
+        List<BookEntity> books = bookService.findByAuthorContains(author);
         return JSONArray.fromObject(books);
     }
 
