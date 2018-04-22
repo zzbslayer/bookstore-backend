@@ -5,9 +5,12 @@
 - Spring Security
 - Mysql
 
+## 
+
 
 ## References
 - Spring Security ajax login : https://blog.csdn.net/u012702547/article/details/78928307
+- Spring Data JPA : https://blog.csdn.net/jiangyu1013/article/details/78882839
 - Spring Data JPA update : https://stackoverflow.com/questions/11881479/how-do-i-update-an-entity-using-spring-data-jpa
 
 ## ToDoList

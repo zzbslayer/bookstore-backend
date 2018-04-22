@@ -1,8 +1,12 @@
 package com.zzbslayer.bookstore.repository;
 
 import com.zzbslayer.bookstore.model.BookEntity;
+
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,13 +17,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Integer > {
 
     BookEntity findByBookid(Integer id);
 
-    List<BookEntity> findByBooknameAndAuthorAndLang(String bookname,String auther,String lang);
-
-    List<BookEntity> findByBookname(String bookname);
+    List<BookEntity> findByBooknameContainsAndAuthorContainsAndLangContainsAndPriceBetweenAndAndYearBetween(String bookname, String author, String lang,BigDecimal down_price, BigDecimal up_price, Integer down_year, Integer up_year);
 
     List<BookEntity> findByBooknameContains(String bookname);
-
-    List<BookEntity> findByAuthor(String auther);
 
     List<BookEntity> findByAuthorContains(String auther);
 

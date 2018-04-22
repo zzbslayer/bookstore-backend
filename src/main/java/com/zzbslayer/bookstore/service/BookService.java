@@ -5,6 +5,7 @@ import com.zzbslayer.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -20,24 +21,17 @@ public class BookService {
         return bookRepository.findByBookid(bookid);
     }
 
-    public List<BookEntity> findByBooknameAndAuthorAndLang(String bookname,String author,String lang){
-        return bookRepository.findByBooknameAndAuthorAndLang(bookname,author,lang);
+    public List<BookEntity> accurateFind(String bookname, String author, String lang, BigDecimal down_price, BigDecimal up_price, Integer down_year, Integer up_year){
+
+        return bookRepository.findByBooknameContainsAndAuthorContainsAndLangContainsAndPriceBetweenAndAndYearBetween(bookname,author,lang,down_price,up_price,down_year,up_year);
     }
 
     public List<BookEntity> findByLang(String lang){
         return bookRepository.findByLang(lang);
     }
 
-    public List<BookEntity> findByAuthor(String author){
-        return bookRepository.findByAuthor(author);
-    }
-
     public List<BookEntity> findByAuthorContains(String author){
         return bookRepository.findByAuthorContains(author);
-    }
-
-    public List<BookEntity> findByBookname(String bookname){
-        return bookRepository.findByBookname(bookname);
     }
 
     public List<BookEntity> findByBooknameContains(String bookname){

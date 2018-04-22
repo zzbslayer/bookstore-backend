@@ -70,9 +70,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/css/**", "/index").permitAll()
+                .antMatchers("/api/addresses/**").permitAll()
+                .antMatchers("/api/categorys/**").permitAll()
                 .antMatchers("/api/books/**").permitAll()
-                .antMatchers("/api/bookimages/**").permitAll()
                 .antMatchers("/api/users/**").hasRole("USER")
                 .antMatchers("/api/userstatus/**").hasRole("ADMIN")
                 .and()
