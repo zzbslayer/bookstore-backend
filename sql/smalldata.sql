@@ -18,3 +18,9 @@ insert into userstatus values (1,"dd","normal");
 
 insert into addresses values (1, "zzbslayer", "Shanghai Minghang District Shanghai Jiao Tong University Dormitory X13", "Jiansi Wang", "18016410637");
 insert into addresses values (2, "zzbslayer", "Shanghai Minghang District East China Normal University ", "Evan Song", "18022222222");
+
+insert into carts values (1,"zzbslayer",1,1);
+insert into carts values (2,"zzbslayer",2,2);
+insert into carts values (3,"zzbslayer",4,5);
+insert into carts values (4,"zzbslayer",6,2);
+insert into carts values (5,"zzbslayer",8,3);

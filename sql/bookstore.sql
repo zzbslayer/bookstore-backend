@@ -62,3 +62,16 @@ create table addresses
         foreign key (username) references users (username)
             on delete cascade
     );
+
+create table carts
+    (
+        cartid  integer NOT NULL AUTO_INCREMENT,
+        username  varchar(20) NOT NULL,
+        bookid  integer NOT NULL,
+        count  integer NOT NULL,
+        primary key (cartid, username, bookid),
+        foreign key (username) references users (username)
+            on delete cascade,
+        foreign key (bookid) references books (bookid)
+            on delete cascade
+    );

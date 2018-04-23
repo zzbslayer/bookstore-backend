@@ -23,4 +23,15 @@ public class UserService {
     public UserEntity findByUsername(String username){
         return userRepository.findByUsername(username);
     }
+
+    public UserEntity save(UserEntity user){
+        return userRepository.save(user);
+    }
+
+    public UserEntity updateInfo(UserEntity user){
+        UserEntity toupdate = userRepository.findByUsername(user.getUsername());
+        toupdate.setEmail(user.getEmail());
+        toupdate.setPhone(user.getPhone());
+        return userRepository.save(toupdate);
+    }
 }

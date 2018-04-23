@@ -18,7 +18,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping(value="/userstatus")
+    @GetMapping(value="/admin/userstatus")
     @ResponseBody
     public JSONArray findAll(){
         List<UserStatusEntity> userstatus = adminService.findStatusAll();
@@ -26,21 +26,21 @@ public class AdminController {
         return JSONArray.fromObject(userstatus);
     }
 
-    @GetMapping(value="/userstatus/{username}")
+    @GetMapping(value="/admin/userstatus/{username}")
     @ResponseBody
     public JSONObject findStatusByUsername(@PathVariable String username) {
         UserStatusEntity user = adminService.findStatusByUsername(username);
         return JSONObject.fromObject(user);
     }
 
-    @GetMapping(value="/user/username/{username}")
+    @GetMapping(value="/admin/users/username/{username}")
     @ResponseBody
     public JSONObject findUserByUsername(@PathVariable String username){
         UserEntity user = adminService.findUserByUsername(username);
         return JSONObject.fromObject(user);
     }
 
-    @GetMapping(value="/user/email/{email}")
+    @GetMapping(value="/admin/users/email/{email}")
     @ResponseBody
     public JSONObject findUserByEmail(@PathVariable String email){
         UserEntity user = adminService.findUserByEmail(email);

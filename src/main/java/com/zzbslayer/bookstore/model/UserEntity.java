@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users", schema = "bookstore", catalog = "")
 public class UserEntity {
-    private int userid;
+    private Integer userid;
     private String username;
     private String pw;
     private String email;
@@ -13,11 +13,11 @@ public class UserEntity {
 
     @Id
     @Column(name = "userid", nullable = false)
-    public int getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 

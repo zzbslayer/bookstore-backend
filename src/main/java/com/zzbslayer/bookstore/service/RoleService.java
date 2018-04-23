@@ -23,4 +23,8 @@ public class RoleService {
     public List<RoleEntity> findByRolename(String rolename){
         return roleRepository.findByRolename(rolename);
     }
+
+    public RoleEntity save(RoleEntity role){
+        return roleRepository.save(role);
+    }
 }

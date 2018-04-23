@@ -73,7 +73,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/addresses/**").permitAll()
                 .antMatchers("/api/categorys/**").permitAll()
                 .antMatchers("/api/books/**").permitAll()
-                .antMatchers("/api/users/**").hasRole("USER")
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/user/profile").hasRole("USER")
+                .antMatchers("/api/user/address").hasRole("USER")
                 .antMatchers("/api/userstatus/**").hasRole("ADMIN")
                 .and()
                 .formLogin().loginPage("/login_page")
@@ -106,10 +108,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         out.flush();
                         out.close();
                     }
-                }).loginProcessingUrl("/login")
+                }).loginProcessingUrl("/api/login")
                 .usernameParameter("username").passwordParameter("password").permitAll()
                 .and()
-                .logout().logoutUrl("/logout")
+                .logout().logoutUrl("/api/logout")
                 .logoutSuccessHandler(new LogoutSuccessHandler() {
                     @Override
                     public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
@@ -124,6 +126,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .deleteCookies("JSESSIONID")
+                .deleteCookies("login")
+                .deleteCookies("role")
+                .deleteCookies("username")
                 .permitAll()
                 .and().csrf().disable().cors()
                 .and()
