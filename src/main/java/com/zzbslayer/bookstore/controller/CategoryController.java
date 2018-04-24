@@ -12,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/api/categories")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private BookService bookService;
 
-    @GetMapping(value="/categories/category/{category}")
+    @GetMapping(value="/category/{category}")
     @ResponseBody
     public JSONArray findByCategoryContains(@PathVariable String category){
         List<CategoryEntity> categories = categoryService.findByCategoryContains(category);
@@ -30,7 +30,7 @@ public class CategoryController {
         return JSONArray.fromObject(books);
     }
 
-    @GetMapping(value="/categories/bookid/{bookid}")
+    @GetMapping(value="/bookid/{bookid}")
     @ResponseBody
     public JSONArray findByBookid(@PathVariable Integer bookid){
         List<CategoryEntity> categories = categoryService.findByBookid(bookid);

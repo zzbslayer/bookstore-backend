@@ -70,13 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/addresses/**").permitAll()
                 .antMatchers("/api/categorys/**").permitAll()
                 .antMatchers("/api/books/**").permitAll()
                 .antMatchers("/api/register").permitAll()
-                .antMatchers("/api/user/profile").hasRole("USER")
-                .antMatchers("/api/user/address").hasRole("USER")
-                .antMatchers("/api/userstatus/**").hasRole("ADMIN")
+                .antMatchers("/api/user/**").hasRole("USER")
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .and()
                 .formLogin().loginPage("/login_page")
                 .successHandler(new AuthenticationSuccessHandler() {

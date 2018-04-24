@@ -14,6 +14,19 @@ public class BookinCart {
     private String imgsrc;
     private int count;
     private boolean select;
+    
+    public void setByBookEntity(BookEntity book){
+        this.setAuthor(book.getAuthor());
+        this.setBookid(book.getBookid());
+        this.setBookname(book.getBookname());
+
+        this.setImgsrc(book.getImgsrc());
+        this.setInventory(book.getCount());
+        this.setLang(book.getLang());
+        this.setPrice(book.getPrice());
+        this.setYear(book.getYear());
+        this.setSelect(false);
+    }
 
     public int getCartid() {
         return cartid;

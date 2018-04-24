@@ -12,13 +12,13 @@ import net.sf.json.JSONArray;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/api/admin")
 public class AdminController {
 
     @Autowired
     private AdminService adminService;
 
-    @GetMapping(value="/admin/userstatus")
+    @GetMapping(value="/userstatus")
     @ResponseBody
     public JSONArray findAll(){
         List<UserStatusEntity> userstatus = adminService.findStatusAll();
@@ -26,21 +26,39 @@ public class AdminController {
         return JSONArray.fromObject(userstatus);
     }
 
-    @GetMapping(value="/admin/userstatus/{username}")
+    @PostMapping(value="/userstatus/ban")
+    @ResponseBody
+    public JSONObject ban(@RequestParam("username")String username){
+        return JSONObject.fromObject(adminService.ban(username));
+    }
+
+    @PostMapping(value="/userstatus/restore")
+    @ResponseBody
+    public JSONObject restore(@RequestParam("username")String username){
+        return JSONObject.fromObject(adminService.restore(username));
+    }
+
+    @PostMapping(value="/userstatus/delete")
+    @ResponseBody
+    public void deleteUser(@RequestParam("username")String username){
+        adminService.deleteUser(username);
+    }
+
+    @GetMapping(value="/userstatus/{username}")
     @ResponseBody
     public JSONObject findStatusByUsername(@PathVariable String username) {
         UserStatusEntity user = adminService.findStatusByUsername(username);
         return JSONObject.fromObject(user);
     }
 
-    @GetMapping(value="/admin/users/username/{username}")
+    @GetMapping(value="/users/username/{username}")
     @ResponseBody
     public JSONObject findUserByUsername(@PathVariable String username){
         UserEntity user = adminService.findUserByUsername(username);
         return JSONObject.fromObject(user);
     }
 
-    @GetMapping(value="/admin/users/email/{email}")
+    @GetMapping(value="/users/email/{email}")
     @ResponseBody
     public JSONObject findUserByEmail(@PathVariable String email){
         UserEntity user = adminService.findUserByEmail(email);

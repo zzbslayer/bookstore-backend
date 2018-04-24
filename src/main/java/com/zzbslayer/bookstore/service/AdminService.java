@@ -22,6 +22,28 @@ public class AdminService {
         return userStatusRepository.findByUsername(username);
     }
 
+    public UserStatusEntity ban(String username){
+        UserStatusEntity status = userStatusRepository.findByUsername(username);
+        if (status==null)
+            return null;
+        status.setUserStatus("BAN");
+        userStatusRepository.save(status);
+        return status;
+    }
+
+    public UserStatusEntity restore(String username) {
+        UserStatusEntity status = userStatusRepository.findByUsername(username);
+        if (status==null)
+            return null;
+        status.setUserStatus("NORMAL");
+        userStatusRepository.save(status);
+        return status;
+    }
+
+    public void deleteUser(String username){
+        userRepository.delete(userRepository.findByUsername(username));
+    }
+
     @Autowired
     private UserRepository userRepository;
 

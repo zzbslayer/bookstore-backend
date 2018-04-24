@@ -5,7 +5,8 @@
 - Spring Security
 - Mysql
 
-## 
+## Database
+The sql scripts are provided under `/sql/` .
 
 
 ## References
@@ -19,4 +20,3 @@
 - The same username notice
 - Spring Session with Redis
 - File upload
-- Add, update and delete

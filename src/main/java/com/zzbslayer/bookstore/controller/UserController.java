@@ -1,9 +1,6 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.model.AddressEntity;
-import com.zzbslayer.bookstore.model.BookinCart;
-import com.zzbslayer.bookstore.model.CartEntity;
-import com.zzbslayer.bookstore.model.UserEntity;
+import com.zzbslayer.bookstore.model.*;
 import com.zzbslayer.bookstore.service.AddressService;
 import com.zzbslayer.bookstore.service.CartService;
 import com.zzbslayer.bookstore.service.UserService;
@@ -21,7 +18,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/api/user")
 public class UserController {
 
     @Autowired
@@ -33,7 +30,7 @@ public class UserController {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @GetMapping(value="/user/profile")
+    @GetMapping(value="/profile")
     @ResponseBody
     public JSONObject getProfile() {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -41,7 +38,7 @@ public class UserController {
         return JSONObject.fromObject(user);
     }
 
-    @GetMapping(value="/user/address")
+    @GetMapping(value="/address")
     @ResponseBody
     public JSONArray getAddress(){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -49,7 +46,41 @@ public class UserController {
         return JSONArray.fromObject(addresses);
     }
 
-    @GetMapping(value="/user/cart")
+    @PostMapping(value="/address/add")
+    @ResponseBody
+    public JSONObject addAddress(@RequestParam("shippingaddress")String shippingaddress,@RequestParam("recipient")String recipient,@RequestParam("phone")String phone){
+        AddressEntity addr = new AddressEntity();
+        addr.setAddressid(0);
+        addr.setShippingaddress(shippingaddress);
+        addr.setRecipient(recipient);
+        addr.setPhone(phone);
+        addr.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        addr = addressService.save(addr);
+        return JSONObject.fromObject(addr);
+    }
+
+    @PostMapping(value="/address/update")
+    @ResponseBody
+    public JSONObject updateAddress(@RequestParam("addressid")Integer addressid,@RequestParam("shippingaddress")String shippingaddress,@RequestParam("recipient")String recipient,@RequestParam("phone")String phone){
+        AddressEntity addr = new AddressEntity();
+        addr.setAddressid(addressid);
+        addr.setShippingaddress(shippingaddress);
+        addr.setRecipient(recipient);
+        addr.setPhone(phone);
+        addr = addressService.updateAddress(addr);
+        if (addr == null)
+            return JSONObject.fromObject(new NaiveError("Edit Address Error","Address Not Matched"));
+        return JSONObject.fromObject(addr);
+    }
+
+
+    @PostMapping(value="/address/delete")
+    @ResponseBody
+    public void deleteAddress(@RequestParam("addressid")Integer addressid){
+        addressService.deleteAddress(addressid);
+    }
+
+    @GetMapping(value="/cart")
     @ResponseBody
     public JSONArray getCart(){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -57,7 +88,7 @@ public class UserController {
         return JSONArray.fromObject(cart);
     }
 
-    @PostMapping(value="/user/update")
+    @PostMapping(value="/profile/update")
     @ResponseBody
     public JSONObject updateInfo(@RequestParam("email")String email, @RequestParam("phone") String phone){
         UserEntity user = new UserEntity();
@@ -67,12 +98,43 @@ public class UserController {
         return JSONObject.fromObject(userService.updateInfo(user));
     }
 
-    @PostMapping(value="/user/cart/delete")
+    @PostMapping(value="/cart/delete")
     @ResponseBody
     public void deleteCart(@RequestParam("cartid")Integer cartid){
         cartService.deleteByCartid(cartid);
     }
 
+    @PostMapping(value="/cart/add")
+    @ResponseBody
+    public JSONObject addToCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return JSONObject.fromObject(cartService.addToCart(bookid, count, name));
+    }
+
+    @PostMapping(value="/cart/edit")
+    @ResponseBody
+    public JSONObject editCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        CartEntity cart = cartService.editCart(name, bookid, count);
+        if (cart == null){
+            return JSONObject.fromObject(new NaiveError("Edit Cart Error","Cart Not Exist"));
+        }
+        return JSONObject.fromObject(cart);
+    }
+
+    @GetMapping(value="/username")
+    @ResponseBody
+    public String getUsername(){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return name;
+    }
+
+    @GetMapping(value="/role")
+    @ResponseBody
+    public JSONArray getRole(){
+        return JSONArray.fromObject(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
+    }
     /*
     @RequestMapping("saveUserEntity")
     @ResponseBody

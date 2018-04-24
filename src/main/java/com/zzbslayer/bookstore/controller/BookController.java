@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value="/api")
+@RequestMapping(value="/api/books")
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
-    @GetMapping(value="/books")
+    @GetMapping(value="/all")
     @ResponseBody
     public JSONArray findAll(){
         List<BookEntity> books = bookService.findAll();
@@ -25,28 +25,28 @@ public class BookController {
         return JSONArray.fromObject(books);
     }
 
-    @GetMapping(value="/books/bookid/{bookid}")
+    @GetMapping(value="/bookid/{bookid}")
     @ResponseBody
     public JSONObject findByBookid(@PathVariable Integer bookid) {
         BookEntity book = bookService.findByBookid(bookid);
         return JSONObject.fromObject(book);
     }
 
-    @GetMapping(value="/books/bookname/{bookname}")
+    @GetMapping(value="/bookname/{bookname}")
     @ResponseBody
     public JSONArray findByBookname(@PathVariable String bookname) {
         List<BookEntity> books = bookService.findByBooknameContains(bookname);
         return JSONArray.fromObject(books);
     }
 
-    @GetMapping(value="/books/author/{author}")
+    @GetMapping(value="/author/{author}")
     @ResponseBody
     public JSONArray findByAuther(@PathVariable String author) {
         List<BookEntity> books = bookService.findByAuthorContains(author);
         return JSONArray.fromObject(books);
     }
 
-    @GetMapping(value="/books/language/{lang}")
+    @GetMapping(value="/language/{lang}")
     @ResponseBody
     public JSONArray findByLang(@PathVariable String lang) {
         List<BookEntity> books = bookService.findByLang(lang);

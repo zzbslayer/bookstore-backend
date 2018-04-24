@@ -8,6 +8,7 @@ import com.zzbslayer.bookstore.repository.CartRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,7 +24,12 @@ public class CartService {
     private BookRepository bookRepository;
 
     public void deleteByCartid(Integer cartid){
-        cartRepository.delete(cartRepository.findByCartid(cartid));
+        CartEntity cart = cartRepository.findByCartid(cartid);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (username.equals(cart.getUsername())){
+            cartRepository.delete(cart);
+        }
+
     }
 
     public List<BookinCart> findByUsername(String username){
@@ -36,21 +42,41 @@ public class CartService {
             BookEntity book = bookRepository.findByBookid(id);
             logger.debug(book.toString());
             BookinCart bookinCart = new BookinCart();
-            bookinCart.setAuthor(book.getAuthor());
-            bookinCart.setBookid(book.getBookid());
-            bookinCart.setBookname(book.getBookname());
 
             bookinCart.setCount(temp.getCount());
-
-            bookinCart.setImgsrc(book.getImgsrc());
-            bookinCart.setInventory(book.getCount());
-            bookinCart.setLang(book.getLang());
-            bookinCart.setPrice(book.getPrice());
-            bookinCart.setYear(book.getYear());
-            bookinCart.setSelect(false);
             bookinCart.setCartid(temp.getCartid());
+
+            bookinCart.setByBookEntity(book);
+
             books.add(bookinCart);
         }
         return books;
+    }
+
+    public CartEntity addToCart(Integer bookid, Integer count, String username){
+        CartEntity cart = cartRepository.findByUsernameAndBookid(username,bookid);
+        if (cart==null){
+            cart = new CartEntity();
+            cart.setCartid(0);
+            cart.setUsername(username);
+            cart.setBookid(bookid);
+            cart.setCount(count);
+            return cartRepository.save(cart);
+        }
+        else{
+            cart.setCount(cart.getCount()+count);
+            return cartRepository.save(cart);
+        }
+    }
+
+    public CartEntity editCart(String username, Integer bookid, Integer count){
+        CartEntity cart = cartRepository.findByUsernameAndBookid(username,bookid);
+        if (cart==null){
+            return null;
+        }
+        else{
+            cart.setCount(count);
+            return cartRepository.save(cart);
+        }
     }
 }
