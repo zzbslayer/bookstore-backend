@@ -1,9 +1,11 @@
 # Bookstore Backend
 ## Programme Structure
-- Springboot
-- Springdata JPA
+- Spring boot
+- Spring data JPA
 - Spring Security
+   - BCrypt encode
 - Mysql
+- slf4j
 
 ## Database
 The sql scripts are provided under `/sql/` .

@@ -1,14 +1,15 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.model.RoleEntity;
-import com.zzbslayer.bookstore.model.UserEntity;
-import com.zzbslayer.bookstore.model.UserStatusEntity;
-import com.zzbslayer.bookstore.repository.RoleRepository;
-import com.zzbslayer.bookstore.repository.UserRepository;
-import com.zzbslayer.bookstore.repository.UserStatusRepository;
+import com.zzbslayer.bookstore.datamodel.domain.RoleEntity;
+import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
+import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
+import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
+import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
+import com.zzbslayer.bookstore.datamodel.dao.UserStatusRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,9 +28,13 @@ public class RegisterService {
         UserEntity user = new UserEntity();
         user.setUserid(0);
         user.setUsername(username);
-        user.setPw(password);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hashstr = encoder.encode(password);
+        user.setPw(hashstr);
         user.setEmail(email);
         user.setPhone(phone);
+        user.setAvatar("null");
 
         RoleEntity role = new RoleEntity();
         role.setRoleid(0);
@@ -39,10 +44,10 @@ public class RegisterService {
             UserStatusEntity userStatus = new UserStatusEntity();
             userStatus.setStatusid(0);
             userStatus.setUsername(username);
-            userStatus.setUserStatus("normal");
-            userStatusRepository.save(userStatus);
+            userStatus.setUserStatus("NORMAL");
 
             UserEntity newUser = userRepository.save(user);
+            userStatusRepository.save(userStatus);
             roleRepository.save(role);
 
             return newUser;

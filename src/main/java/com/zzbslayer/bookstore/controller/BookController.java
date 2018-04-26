@@ -1,6 +1,6 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.model.BookEntity;
+import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
 import com.zzbslayer.bookstore.service.BookService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -21,7 +21,6 @@ public class BookController {
     @ResponseBody
     public JSONArray findAll(){
         List<BookEntity> books = bookService.findAll();
-        System.out.println(JSONArray.fromObject(books));
         return JSONArray.fromObject(books);
     }
 
@@ -53,14 +52,14 @@ public class BookController {
         return JSONArray.fromObject(books);
     }
 
-    @GetMapping(value="/books/vague/{msg}")
+    @GetMapping(value="/vague/{msg}")
     @ResponseBody
     public JSONArray vagueFind(@PathVariable String msg){
         List<BookEntity> books = bookService.VagueFind(msg);
         return JSONArray.fromObject(books);
     }
 
-    @PostMapping(value="/books/search")
+    @PostMapping(value="/search")
     @ResponseBody
     public JSONArray accurateFind(@RequestParam("bookname") String bookname, @RequestParam("author") String author, @RequestParam("lang") String lang, @RequestParam("down_price") BigDecimal down_price, @RequestParam("up_price") BigDecimal up_price, @RequestParam("down_year") Integer down_year, @RequestParam("up_year") Integer up_year){
         if (bookname.equals("null")){

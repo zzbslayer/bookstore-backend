@@ -1,6 +1,6 @@
-package com.zzbslayer.bookstore.repository;
+package com.zzbslayer.bookstore.datamodel.dao;
 
-import com.zzbslayer.bookstore.model.CartEntity;
+import com.zzbslayer.bookstore.datamodel.domain.CartEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

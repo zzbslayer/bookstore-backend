@@ -1,23 +1,24 @@
-package com.zzbslayer.bookstore.model;
+package com.zzbslayer.bookstore.datamodel.domain;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "bookstore", catalog = "")
 public class UserEntity {
-    private Integer userid;
+    private int userid;
     private String username;
     private String pw;
     private String email;
     private String phone;
+    private String avatar;
 
     @Id
     @Column(name = "userid", nullable = false)
-    public Integer getUserid() {
+    public int getUserid() {
         return userid;
     }
 
-    public void setUserid(Integer userid) {
+    public void setUserid(int userid) {
         this.userid = userid;
     }
 
@@ -32,7 +33,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "pw", nullable = false, length = 20)
+    @Column(name = "pw", nullable = false, length = 64)
     public String getPw() {
         return pw;
     }
@@ -61,6 +62,16 @@ public class UserEntity {
         this.phone = phone;
     }
 
+    @Basic
+    @Column(name = "avatar", nullable = true)
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +84,7 @@ public class UserEntity {
         if (pw != null ? !pw.equals(that.pw) : that.pw != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
+        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
 
         return true;
     }
@@ -84,6 +96,7 @@ public class UserEntity {
         result = 31 * result + (pw != null ? pw.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         return result;
     }
 }

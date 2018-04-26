@@ -1,9 +1,11 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.model.RoleEntity;
-import com.zzbslayer.bookstore.model.UserEntity;
-import com.zzbslayer.bookstore.repository.RoleRepository;
-import com.zzbslayer.bookstore.repository.UserRepository;
+import com.zzbslayer.bookstore.datamodel.dao.UserStatusRepository;
+import com.zzbslayer.bookstore.datamodel.domain.RoleEntity;
+import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
+import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
+import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
+import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,17 +30,21 @@ public class CustomUserService implements UserDetailsService { // custom UserSer
     @Autowired
     RoleRepository roleRepository;
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    UserStatusRepository userStatusRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        BCryptPasswordEncoder encoder = passwordEncoder();
         UserEntity user = userRepository.findByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException("User Not Found");
+        }
+
+        UserStatusEntity status = userStatusRepository.findByUsername(username);
+        if (status!=null) {
+            if (status.getUserStatus().equals("BAN")) {
+                throw new UsernameNotFoundException("User Is Banned");
+            }
         }
 
         List<RoleEntity> roles = roleRepository.findByUsername(username);
@@ -47,11 +53,10 @@ public class CustomUserService implements UserDetailsService { // custom UserSer
 
         for (RoleEntity role : roles) {
             authorities.add(new SimpleGrantedAuthority(role.getUsername()));
-            System.out.println(role.getRolename());
         }
 
         return new User(user.getUsername(),
-                encoder.encode(user.getPw()),getGrantedAuthorities(user));
+                user.getPw(),getGrantedAuthorities(user));
     }
 
     private Collection<GrantedAuthority> getGrantedAuthorities(UserEntity user) {
@@ -59,6 +64,7 @@ public class CustomUserService implements UserDetailsService { // custom UserSer
         Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
 
         String username = user.getUsername();
+
         List<RoleEntity> roles = roleRepository.findByUsername(username);
         for (RoleEntity role : roles){
             if (role.getRolename().equals("ADMIN")) {

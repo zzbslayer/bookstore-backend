@@ -1,7 +1,7 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.model.RoleEntity;
-import com.zzbslayer.bookstore.repository.RoleRepository;
+import com.zzbslayer.bookstore.datamodel.domain.RoleEntity;
+import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

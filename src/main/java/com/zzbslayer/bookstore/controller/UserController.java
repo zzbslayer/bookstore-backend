@@ -1,10 +1,10 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.model.*;
+import com.zzbslayer.bookstore.datamodel.domain.*;
 import com.zzbslayer.bookstore.service.AddressService;
 import com.zzbslayer.bookstore.service.CartService;
 import com.zzbslayer.bookstore.service.UserService;
-import net.sf.json.JSON;
+import com.zzbslayer.bookstore.utils.BookinCart;
 import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,8 +68,6 @@ public class UserController {
         addr.setRecipient(recipient);
         addr.setPhone(phone);
         addr = addressService.updateAddress(addr);
-        if (addr == null)
-            return JSONObject.fromObject(new NaiveError("Edit Address Error","Address Not Matched"));
         return JSONObject.fromObject(addr);
     }
 
@@ -90,11 +88,13 @@ public class UserController {
 
     @PostMapping(value="/profile/update")
     @ResponseBody
-    public JSONObject updateInfo(@RequestParam("email")String email, @RequestParam("phone") String phone){
+    public JSONObject updateInfo(@RequestParam("email")String email, @RequestParam("phone") String phone, @RequestParam("avatar") String avatar){
         UserEntity user = new UserEntity();
+        System.out.println(avatar);
         user.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         user.setEmail(email);
         user.setPhone(phone);
+        user.setAvatar(avatar);
         return JSONObject.fromObject(userService.updateInfo(user));
     }
 
@@ -104,21 +104,18 @@ public class UserController {
         cartService.deleteByCartid(cartid);
     }
 
-    @PostMapping(value="/cart/add")
+    @PostMapping(value="/cart/save")
     @ResponseBody
     public JSONObject addToCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         return JSONObject.fromObject(cartService.addToCart(bookid, count, name));
     }
 
-    @PostMapping(value="/cart/edit")
+    @PostMapping(value="/cart/update")
     @ResponseBody
     public JSONObject editCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         CartEntity cart = cartService.editCart(name, bookid, count);
-        if (cart == null){
-            return JSONObject.fromObject(new NaiveError("Edit Cart Error","Cart Not Exist"));
-        }
         return JSONObject.fromObject(cart);
     }
 

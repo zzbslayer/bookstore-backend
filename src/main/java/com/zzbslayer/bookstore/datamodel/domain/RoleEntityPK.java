@@ -1,21 +1,21 @@
-package com.zzbslayer.bookstore.model;
+package com.zzbslayer.bookstore.datamodel.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
 
-public class UserStatusEntityPK implements Serializable {
-    private int statusid;
+public class RoleEntityPK implements Serializable {
+    private int roleid;
     private String username;
 
-    @Column(name = "statusid", nullable = false)
+    @Column(name = "roleid", nullable = false)
     @Id
-    public int getStatusid() {
-        return statusid;
+    public int getRoleid() {
+        return roleid;
     }
 
-    public void setStatusid(int statusid) {
-        this.statusid = statusid;
+    public void setRoleid(int roleid) {
+        this.roleid = roleid;
     }
 
     @Column(name = "username", nullable = false, length = 20)
@@ -33,9 +33,9 @@ public class UserStatusEntityPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserStatusEntityPK that = (UserStatusEntityPK) o;
+        RoleEntityPK that = (RoleEntityPK) o;
 
-        if (statusid != that.statusid) return false;
+        if (roleid != that.roleid) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
 
         return true;
@@ -43,7 +43,7 @@ public class UserStatusEntityPK implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = statusid;
+        int result = roleid;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         return result;
     }

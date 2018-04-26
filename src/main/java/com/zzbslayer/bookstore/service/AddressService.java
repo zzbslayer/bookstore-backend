@@ -1,7 +1,7 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.model.AddressEntity;
-import com.zzbslayer.bookstore.repository.AddressRepository;
+import com.zzbslayer.bookstore.datamodel.domain.AddressEntity;
+import com.zzbslayer.bookstore.datamodel.dao.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

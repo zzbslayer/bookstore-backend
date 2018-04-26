@@ -1,7 +1,7 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.model.BookEntity;
-import com.zzbslayer.bookstore.model.CategoryEntity;
+import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
+import com.zzbslayer.bookstore.datamodel.domain.CategoryEntity;
 import com.zzbslayer.bookstore.service.BookService;
 import com.zzbslayer.bookstore.service.CategoryService;
 import net.sf.json.JSONArray;

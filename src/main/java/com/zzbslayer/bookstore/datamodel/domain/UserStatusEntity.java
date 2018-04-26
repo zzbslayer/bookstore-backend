@@ -1,4 +1,4 @@
-package com.zzbslayer.bookstore.model;
+package com.zzbslayer.bookstore.datamodel.domain;
 
 import javax.persistence.*;
 

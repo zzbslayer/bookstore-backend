@@ -1,15 +1,7 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.model.NaiveError;
-import com.zzbslayer.bookstore.model.RoleEntity;
-import com.zzbslayer.bookstore.model.UserEntity;
-import com.zzbslayer.bookstore.model.UserStatusEntity;
-import com.zzbslayer.bookstore.repository.RoleRepository;
-import com.zzbslayer.bookstore.repository.UserRepository;
-import com.zzbslayer.bookstore.repository.UserStatusRepository;
-import net.sf.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
+import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +33,7 @@ public class UserService {
         UserEntity toupdate = userRepository.findByUsername(user.getUsername());
         toupdate.setEmail(user.getEmail());
         toupdate.setPhone(user.getPhone());
+        toupdate.setAvatar(user.getAvatar());
         return userRepository.save(toupdate);
     }
 }

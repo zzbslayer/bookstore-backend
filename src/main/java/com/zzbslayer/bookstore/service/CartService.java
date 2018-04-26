@@ -1,10 +1,10 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.model.BookEntity;
-import com.zzbslayer.bookstore.model.BookinCart;
-import com.zzbslayer.bookstore.model.CartEntity;
-import com.zzbslayer.bookstore.repository.BookRepository;
-import com.zzbslayer.bookstore.repository.CartRepository;
+import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
+import com.zzbslayer.bookstore.utils.BookinCart;
+import com.zzbslayer.bookstore.datamodel.domain.CartEntity;
+import com.zzbslayer.bookstore.datamodel.dao.BookRepository;
+import com.zzbslayer.bookstore.datamodel.dao.CartRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

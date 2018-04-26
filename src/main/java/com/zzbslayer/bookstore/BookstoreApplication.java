@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ComponentScan(basePackages ="com.zzbslayer.bookstore")
-@EnableJpaRepositories(basePackages = "com.zzbslayer.bookstore.repository")
+@EnableJpaRepositories(basePackages = "com.zzbslayer.bookstore.datamodel.dao")
 @EntityScan(basePackages = "com.zzbslayer.bookstore")
 public class BookstoreApplication {
 

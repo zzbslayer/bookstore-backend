@@ -1,14 +1,15 @@
 package com.zzbslayer.bookstore.controller;
 
-import com.zzbslayer.bookstore.model.UserEntity;
-import com.zzbslayer.bookstore.model.UserStatusEntity;
+import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
+import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
+import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
 import com.zzbslayer.bookstore.service.AdminService;
-import net.sf.json.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONArray;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -22,7 +23,6 @@ public class AdminController {
     @ResponseBody
     public JSONArray findAll(){
         List<UserStatusEntity> userstatus = adminService.findStatusAll();
-        System.out.println(JSONArray.fromObject(userstatus));
         return JSONArray.fromObject(userstatus);
     }
 
@@ -64,6 +64,44 @@ public class AdminController {
         UserEntity user = adminService.findUserByEmail(email);
         return JSONObject.fromObject(user);
     }
+
+    @PostMapping(value="/books/update")
+    @ResponseBody
+    public JSONObject updateBook(@RequestParam("bookid")Integer bookid, @RequestParam("bookname")String bookname, @RequestParam("author")String author, @RequestParam("lang")String lang, @RequestParam("price")BigDecimal price, @RequestParam("year")Integer year, @RequestParam("count")Integer count, @RequestParam("imgsrc")String imgsrc){
+        BookEntity book = new BookEntity();
+        book.setBookid(bookid);
+        book.setBookname(bookname);
+        book.setAuthor(author);
+        book.setLang(lang);
+        book.setCount(count);
+        book.setImgsrc(imgsrc);
+        book.setPrice(price);
+        book.setYear(year);
+        return JSONObject.fromObject(adminService.saveBook(book));
+    }
+
+    @PostMapping(value="/books/save")
+    @ResponseBody
+    public JSONObject saveBook(@RequestParam("bookname")String bookname, @RequestParam("author")String author, @RequestParam("lang")String lang, @RequestParam("price")BigDecimal price, @RequestParam("year")Integer year, @RequestParam("count")Integer count, @RequestParam("imgsrc")String imgsrc){
+        BookEntity book = new BookEntity();
+        book.setBookid(0);
+        book.setBookname(bookname);
+        book.setAuthor(author);
+        book.setLang(lang);
+        book.setCount(count);
+        book.setImgsrc(imgsrc);
+        book.setPrice(price);
+        book.setYear(year);
+        return JSONObject.fromObject(adminService.saveBook(book));
+    }
+
+    @PostMapping(value="/books/delete")
+    @ResponseBody
+    public void deleteBook(@RequestParam("bookid")Integer bookid){
+        adminService.deleteBook(bookid);
+    }
+
+
 
     /*
     @RequestMapping("saveUserStatusEntity")

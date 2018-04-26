@@ -1,4 +1,6 @@
-package com.zzbslayer.bookstore.model;
+package com.zzbslayer.bookstore.utils;
+
+import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
 
 import java.math.BigDecimal;
 

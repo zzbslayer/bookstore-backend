@@ -1,11 +1,15 @@
 package com.zzbslayer.bookstore.config;
 
 import com.zzbslayer.bookstore.service.CustomUserService;
+import com.zzbslayer.bookstore.service.UserService;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,10 +20,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.savedrequest.NullRequestCache;
+import org.springframework.util.DigestUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,34 +43,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    UserService userService;
+
     @Bean
     UserDetailsService customUserService(){ //注册UserDetailsService 的bean
         return new CustomUserService();
     }
 
-    @Override
+    @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserService()); //user Details Service verification
-
+        auth.userDetailsService(customUserService()).passwordEncoder(new BCryptPasswordEncoder()); //user Details Service verification
     }
-
-    /*
-     * password with md5 encode
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserService()).passwordEncoder(new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence charSequence) {
-                return DigestUtils.md5DigestAsHex(charSequence.toString().getBytes());
-            }
-
-            @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                return s.equals(DigestUtils.md5DigestAsHex(charSequence.toString().getBytes()));
-            }
-        });
-    }
-    */
 
     // @formatter:off
     @Override
@@ -90,7 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             authorities.add(authority.getAuthority());
                         };
                         PrintWriter out = httpServletResponse.getWriter();
-                        out.write("{\"status\":\"ok\",\"username\":\"" + username + "\",\"msg\":\"login success\",\"role\":"+ JSONArray.fromObject(authorities).toString()+"}");
+                        out.write("{\"status\":\"ok\",\"msg\":\"login success\",\"user\":"+ JSONObject.fromObject(userService.findByUsername(username)).toString()+
+                                ",\"role\":"+ JSONArray.fromObject(authorities).toString()+"}");
                         out.flush();
                         out.close();
                     }
@@ -99,6 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
+                        System.out.println("password:"+httpServletRequest.getParameter("password"));
                         logger.debug("Login failure");
                         logger.debug(e.getMessage());
                         PrintWriter out = httpServletResponse.getWriter();

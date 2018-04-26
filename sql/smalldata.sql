@@ -7,14 +7,14 @@ insert into books values (6, "Overlord", "Satoshi Oshio", "Japanese", 74.00, 201
 insert into books values (7, "A Certain Magical Index", "Kazuma Kamachi", "Japanese", 30.00, 2004, 103, "https://images-na.ssl-images-amazon.com/images/I/51MPxZvR5hL._AC_US436_QL65_.jpg");
 insert into books values (8, "A Certain Scientific Railgun", "Kazuma Kamachi", "Japanese", 30.00, 2007, 114, "https://images-na.ssl-images-amazon.com/images/I/512eq6LtkWL._AC_US436_FMwebp_QL65_.jpg");
 
-insert into users values (1,"zzbslayer","wjwjswzd","zzbslayer@sjtu.edu.cn","18016410637");
-insert into users values (2,"dd","dd","dd@sjtu.edu.cn","18811212312");
+insert into users values (1,"zzbslayer","$2a$10$1grydO953yDbgV5JBvv8YOKX1t9WM1fKF0OY/hRJQEt2tm4ik0jtC","zzbslayer@sjtu.edu.cn","18016410637","null");
+insert into users values (2,"dd","$2a$10$vRL53GtKQe0pwkCQoFP1kOYEAyXd3mPLR6AaIHWqlwvaaRKtylQbK","dd@sjtu.edu.cn","18811212312","null");
 
 insert into roles values (1,"zzbslayer","ADMIN");
 insert into roles values (2,"zzbslayer","USER");
 insert into roles values (3,"dd","USER");
 
-insert into userstatus values (1,"dd","normal");
+insert into userstatus values (1,"dd","NORMAL");
 
 insert into addresses values (1, "zzbslayer", "Shanghai Minghang District Shanghai Jiao Tong University Dormitory X13", "Jiansi Wang", "18016410637");
 insert into addresses values (2, "zzbslayer", "Shanghai Minghang District East China Normal University ", "Evan Song", "18022222222");
@@ -24,3 +24,22 @@ insert into carts values (2,"zzbslayer",2,2);
 insert into carts values (3,"zzbslayer",4,5);
 insert into carts values (4,"zzbslayer",6,2);
 insert into carts values (5,"zzbslayer",8,3);
+
+insert into category values (1,1,"Fantasy");
+insert into category values (2,2,"Comedy");
+insert into category values (3,3,"Kuuki Kei");
+insert into category values (4,3,"Cringe Comedy");
+insert into category values (5,3,"Black Comedy");
+insert into category values (6,4,"Harem");
+insert into category values (7,4,"Romantic Comedy");
+insert into category values (8,4,"Kuuki Kei");
+insert into category values (9,5,"Action");
+insert into category values (10,5,"Comedy");
+insert into category values (11,5,"Fantasy");
+insert into category values (12,6,"Fantasy");
+insert into category values (13,7,"Action");
+insert into category values (14,7,"Comedy Drama");
+insert into category values (15,7,"Science Fantasy");
+insert into category values (16,8,"Action");
+insert into category values (17,8,"Comedy Drama");
+insert into category values (18,8,"Science Fantasy");

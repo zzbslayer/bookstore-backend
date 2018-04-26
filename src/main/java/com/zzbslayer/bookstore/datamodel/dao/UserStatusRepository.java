@@ -1,6 +1,6 @@
-package com.zzbslayer.bookstore.repository;
+package com.zzbslayer.bookstore.datamodel.dao;
 
-import com.zzbslayer.bookstore.model.UserStatusEntity;
+import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

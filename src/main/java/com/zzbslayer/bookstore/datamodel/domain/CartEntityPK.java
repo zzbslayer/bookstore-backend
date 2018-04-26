@@ -1,18 +1,16 @@
-package com.zzbslayer.bookstore.model;
+package com.zzbslayer.bookstore.datamodel.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "carts", schema = "bookstore", catalog = "")
-@IdClass(CartEntityPK.class)
-public class CartEntity {
+public class CartEntityPK implements Serializable {
     private int cartid;
     private String username;
     private int bookid;
-    private int count;
 
-    @Id
     @Column(name = "cartid", nullable = false)
+    @Id
     public int getCartid() {
         return cartid;
     }
@@ -21,8 +19,8 @@ public class CartEntity {
         this.cartid = cartid;
     }
 
-    @Id
     @Column(name = "username", nullable = false, length = 20)
+    @Id
     public String getUsername() {
         return username;
     }
@@ -31,8 +29,8 @@ public class CartEntity {
         this.username = username;
     }
 
-    @Id
     @Column(name = "bookid", nullable = false)
+    @Id
     public int getBookid() {
         return bookid;
     }
@@ -41,26 +39,15 @@ public class CartEntity {
         this.bookid = bookid;
     }
 
-    @Basic
-    @Column(name = "count", nullable = false)
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CartEntity that = (CartEntity) o;
+        CartEntityPK that = (CartEntityPK) o;
 
         if (cartid != that.cartid) return false;
         if (bookid != that.bookid) return false;
-        if (count != that.count) return false;
         if (username != null ? !username.equals(that.username) : that.username != null) return false;
 
         return true;
@@ -71,7 +58,6 @@ public class CartEntity {
         int result = cartid;
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + bookid;
-        result = 31 * result + count;
         return result;
     }
 }

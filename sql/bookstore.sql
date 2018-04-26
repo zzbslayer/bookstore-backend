@@ -25,9 +25,10 @@ create table users
 	(
         userid     integer NOT NULL AUTO_INCREMENT,
         username		varchar(20) NOT NULL UNIQUE,
-	    pw		varchar(20) NOT NULL,
+	    pw		varchar(64) NOT NULL,
 	    email		varchar(50) NOT NULL UNIQUE,
         phone      varchar(20) NOT NULL UNIQUE,
+        avatar    varchar(50000),
 	    primary key (userid)
 	);
 
