@@ -3,8 +3,10 @@ package com.zzbslayer.bookstore.controller;
 import com.zzbslayer.bookstore.datamodel.domain.*;
 import com.zzbslayer.bookstore.service.AddressService;
 import com.zzbslayer.bookstore.service.CartService;
+import com.zzbslayer.bookstore.service.OrderService;
 import com.zzbslayer.bookstore.service.UserService;
 import com.zzbslayer.bookstore.utils.BookinCart;
+import com.zzbslayer.bookstore.utils.OrderwithBooks;
 import net.sf.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,8 @@ public class UserController {
     private AddressService addressService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private OrderService orderService;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -131,6 +135,20 @@ public class UserController {
     public JSONArray getRole(){
         return JSONArray.fromObject(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 
+    }
+
+    @GetMapping(value="/order")
+    @ResponseBody
+    public JSONArray getOrder(){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<OrderwithBooks> orderlist = orderService.findOrderByUsername(name);
+        return JSONArray.fromObject(orderlist);
+    }
+
+    @PostMapping(value="/order/add")
+    @ResponseBody
+    public JSONObject addOrder(@RequestParam("book") List<String> books,@RequestParam("addressid")Integer addressid){
+        return JSONObject.fromObject(orderService.addOrder(books,addressid));
     }
     /*
     @RequestMapping("saveUserEntity")

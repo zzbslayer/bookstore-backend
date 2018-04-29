@@ -6,15 +6,15 @@ import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
 import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
 import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
 import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,6 +23,7 @@ import java.util.List;
 
 @Service
 public class CustomUserService implements UserDetailsService { // custom UserService interface
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     UserRepository userRepository;
@@ -43,6 +44,7 @@ public class CustomUserService implements UserDetailsService { // custom UserSer
         UserStatusEntity status = userStatusRepository.findByUsername(username);
         if (status!=null) {
             if (status.getUserStatus().equals("BAN")) {
+                logger.debug("Banned user "+username+" tried to login");
                 throw new UsernameNotFoundException("User Is Banned");
             }
         }

@@ -8,6 +8,7 @@ create table books
         year       numeric(4,0) NOT NULL,
         count      numeric(5,0) NOT NULL,
         imgsrc  varchar(500) NOT NULL,
+        sales   integer NOT NULL,
 	    primary key (bookid)
 	);
 
@@ -76,3 +77,34 @@ create table carts
         foreign key (bookid) references books (bookid)
             on delete cascade
     );
+
+create table userorder
+    (
+        orderid integer NOT NULL AUTO_INCREMENT,
+        addressid   integer NOT NULL,
+        username varchar(20) NOT NULL,
+        date varchar(35) NOT NULL,
+        primary key (orderid, username, addressid),
+        foreign key (addressid) references addresses (addressid)
+            on delete cascade,
+        foreign key (username) references users (username)
+            on delete cascade
+    );
+
+create table orderbooks
+    (
+        obid    integer NOT NULL AUTO_INCREMENT,
+        orderid integer NOT NULL,
+        bookid      integer NOT NULL,
+        bookname	varchar(70) NOT NULL,
+        author		varchar(40) NOT NULL,
+        lang		varchar(20) NOT NULL,
+        price      numeric(7,2) NOT NULL,
+        year       numeric(4,0) NOT NULL,
+        amount     numeric(5,0) NOT NULL,
+        imgsrc  varchar(500) NOT NULL,
+        primary key (obid, orderid, bookid),
+        foreign key (orderid) references userorder (orderid)
+            on delete cascade
+    );
+

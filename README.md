@@ -17,8 +17,5 @@ The sql scripts are provided under `/sql/` .
 - Spring Data JPA update : https://stackoverflow.com/questions/11881479/how-do-i-update-an-entity-using-spring-data-jpa
 
 ## ToDoList
-- Post Valid
-- Password encode
 - The same username notice
 - Spring Session with Redis
-- File upload

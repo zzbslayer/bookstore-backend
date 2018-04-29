@@ -2,19 +2,41 @@ package com.zzbslayer.bookstore.datamodel.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Entity
-@Table(name = "books", schema = "bookstore", catalog = "")
-public class BookEntity {
+@Table(name = "orderbooks", schema = "bookstore", catalog = "")
+@IdClass(OrderbookEntityPK.class)
+public class OrderbookEntity {
+    private int obid;
+    private int orderid;
     private int bookid;
     private String bookname;
     private String author;
     private String lang;
     private BigDecimal price;
     private int year;
-    private int count;
+    private int amount;
     private String imgsrc;
+
+    @Id
+    @Column(name = "obid", nullable = false)
+    public int getObid() {
+        return obid;
+    }
+
+    public void setObid(int obid) {
+        this.obid = obid;
+    }
+
+    @Id
+    @Column(name = "orderid", nullable = false)
+    public int getOrderid() {
+        return orderid;
+    }
+
+    public void setOrderid(int orderid) {
+        this.orderid = orderid;
+    }
 
     @Id
     @Column(name = "bookid", nullable = false)
@@ -77,13 +99,13 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "count", nullable = false, precision = 0)
-    public int getCount() {
-        return count;
+    @Column(name = "amount", nullable = false, precision = 0)
+    public int getAmount() {
+        return amount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Basic
@@ -101,11 +123,13 @@ public class BookEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BookEntity that = (BookEntity) o;
+        OrderbookEntity that = (OrderbookEntity) o;
 
+        if (obid != that.obid) return false;
+        if (orderid != that.orderid) return false;
         if (bookid != that.bookid) return false;
         if (year != that.year) return false;
-        if (count != that.count) return false;
+        if (amount != that.amount) return false;
         if (bookname != null ? !bookname.equals(that.bookname) : that.bookname != null) return false;
         if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (lang != null ? !lang.equals(that.lang) : that.lang != null) return false;
@@ -117,13 +141,15 @@ public class BookEntity {
 
     @Override
     public int hashCode() {
-        int result = bookid;
+        int result = obid;
+        result = 31 * result + orderid;
+        result = 31 * result + bookid;
         result = 31 * result + (bookname != null ? bookname.hashCode() : 0);
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (lang != null ? lang.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + year;
-        result = 31 * result + count;
+        result = 31 * result + amount;
         result = 31 * result + (imgsrc != null ? imgsrc.hashCode() : 0);
         return result;
     }
