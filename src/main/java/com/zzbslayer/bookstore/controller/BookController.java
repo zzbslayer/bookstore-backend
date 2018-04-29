@@ -76,6 +76,12 @@ public class BookController {
         return JSONArray.fromObject(books);
     }
 
+    @GetMapping(value="/sales/{bookid}")
+    @ResponseBody
+    public Integer getSales(@PathVariable("bookid")Integer bookid){
+        return bookService.getSales(bookid);
+    }
+
 
     /*
     @RequestMapping("saveBookEntity")

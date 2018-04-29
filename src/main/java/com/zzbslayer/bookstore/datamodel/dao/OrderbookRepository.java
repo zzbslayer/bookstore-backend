@@ -9,4 +9,6 @@ public interface OrderbookRepository extends JpaRepository<OrderbookEntity, Inte
 
     List<OrderbookEntity> findByOrderid(Integer orderid);
 
+    List<OrderbookEntity> findByBookid(Integer bookid);
+
 }

@@ -8,7 +8,6 @@ create table books
         year       numeric(4,0) NOT NULL,
         count      numeric(5,0) NOT NULL,
         imgsrc  varchar(500) NOT NULL,
-        sales   integer NOT NULL,
 	    primary key (bookid)
 	);
 

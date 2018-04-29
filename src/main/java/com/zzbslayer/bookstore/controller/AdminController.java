@@ -77,12 +77,12 @@ public class AdminController {
         book.setImgsrc(imgsrc);
         book.setPrice(price);
         book.setYear(year);
-        return JSONObject.fromObject(adminService.saveBook(book));
+        return JSONObject.fromObject(adminService.updateBook(book));
     }
 
     @PostMapping(value="/books/save")
     @ResponseBody
-    public JSONObject saveBook(@RequestParam("bookname")String bookname, @RequestParam("author")String author, @RequestParam("lang")String lang, @RequestParam("price")BigDecimal price, @RequestParam("year")Integer year, @RequestParam("count")Integer count, @RequestParam("imgsrc")String imgsrc){
+    public JSONObject saveBook(@RequestParam("bookname")String bookname, @RequestParam("author")String author, @RequestParam("lang")String lang, @RequestParam("price")BigDecimal price, @RequestParam("year")Integer year, @RequestParam("count")Integer count, @RequestParam("imgsrc")String imgsrc,@RequestParam("category")String category){
         BookEntity book = new BookEntity();
         book.setBookid(0);
         book.setBookname(bookname);
@@ -92,7 +92,7 @@ public class AdminController {
         book.setImgsrc(imgsrc);
         book.setPrice(price);
         book.setYear(year);
-        return JSONObject.fromObject(adminService.saveBook(book));
+        return JSONObject.fromObject(adminService.saveBook(book,category));
     }
 
     @PostMapping(value="/books/delete")

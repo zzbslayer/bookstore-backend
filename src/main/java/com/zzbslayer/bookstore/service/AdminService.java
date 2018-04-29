@@ -1,12 +1,10 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.datamodel.dao.BookRepository;
-import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
+import com.zzbslayer.bookstore.datamodel.dao.*;
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
+import com.zzbslayer.bookstore.datamodel.domain.CategoryEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
-import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
-import com.zzbslayer.bookstore.datamodel.dao.UserStatusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,6 @@ import java.util.List;
 public class AdminService {
     @Autowired
     private UserStatusRepository userStatusRepository;
-
     @Autowired
     private RoleRepository roleRepository;
 
@@ -69,10 +66,24 @@ public class AdminService {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-    public BookEntity saveBook(BookEntity book){
+    public BookEntity updateBook(BookEntity book){
         bookRepository.save(book);
         return bookRepository.findByBooknameAndAuthorAndCountAndImgsrcAndLangAndPriceAndYear(book.getBookname(), book.getAuthor(),book.getCount(),book.getImgsrc(),book.getLang(),book.getPrice(),book.getYear());
+    }
+
+    public BookEntity saveBook(BookEntity book, String category){
+        bookRepository.save(book);
+        BookEntity abook = bookRepository.findByBooknameAndAuthorAndCountAndImgsrcAndLangAndPriceAndYear(book.getBookname(), book.getAuthor(),book.getCount(),book.getImgsrc(),book.getLang(),book.getPrice(),book.getYear());
+
+        CategoryEntity cate = new CategoryEntity();
+        cate.setBookid(abook.getBookid());
+        cate.setCategory(category);
+        cate.setCategoryid(0);
+        categoryRepository.save(cate);
+        return abook;
     }
 
     public  void deleteBook(Integer bookid){
