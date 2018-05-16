@@ -1,4 +1,4 @@
-package com.zzbslayer.bookstore.service;
+package com.zzbslayer.bookstore.config;
 
 import com.zzbslayer.bookstore.datamodel.dao.UserStatusRepository;
 import com.zzbslayer.bookstore.datamodel.domain.RoleEntity;
