@@ -26,5 +26,3 @@
 /nbdist/
 /.nb-gradle/
 
-### Mysql config ###
-application.properties
