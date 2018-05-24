@@ -1,0 +1,61 @@
+package com.zzbslayer.bookstore.service.ServiceImpl;
+
+import com.zzbslayer.bookstore.datamodel.dao.BookRepository;
+import com.zzbslayer.bookstore.datamodel.dao.OrderbookRepository;
+import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
+import com.zzbslayer.bookstore.datamodel.domain.OrderbookEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Service
+public class BookServiceImpl implements com.zzbslayer.bookstore.service.BookService{
+    @Autowired
+    private BookRepository bookRepository;
+    @Autowired
+    private OrderbookRepository orderbookRepository;
+
+    public List<BookEntity> findAll(){
+        return bookRepository.findAll();
+    }
+
+    public BookEntity findByBookid(Integer bookid){
+        return bookRepository.findByBookid(bookid);
+    }
+
+    public List<BookEntity> accurateFind(String bookname, String author, String lang, BigDecimal down_price, BigDecimal up_price, Integer down_year, Integer up_year){
+
+        return bookRepository.findByBooknameContainsAndAuthorContainsAndLangContainsAndPriceBetweenAndAndYearBetween(bookname,author,lang,down_price,up_price,down_year,up_year);
+    }
+
+    public List<BookEntity> findByLang(String lang){
+        return bookRepository.findByLang(lang);
+    }
+
+    public List<BookEntity> findByAuthorContains(String author){
+        return bookRepository.findByAuthorContains(author);
+    }
+
+    public List<BookEntity> findByBooknameContains(String bookname){
+        return bookRepository.findByBooknameContains(bookname);
+    }
+
+    public List<BookEntity> VagueFind(String msg){
+        List<BookEntity> array1 = bookRepository.findByBooknameContains(msg);
+        List<BookEntity> array2 = bookRepository.findByAuthorContains(msg);
+        array1.removeAll(array2);
+        array1.addAll(array2);
+        return array1;
+    }
+
+    public Integer getSales(Integer bookid){
+        List<OrderbookEntity> books = orderbookRepository.findByBookid(bookid);
+        Integer sum = 0;
+        for (OrderbookEntity book: books){
+            sum += book.getAmount();
+        }
+        return sum;
+    }
+}

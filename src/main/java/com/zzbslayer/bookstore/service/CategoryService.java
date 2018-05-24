@@ -11,26 +11,9 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
+public interface CategoryService {
 
-    public List<CategoryEntity> findByBookid(Integer bookid){
-        return categoryRepository.findByBookid(bookid);
-    }
+    List<CategoryEntity> findByBookid(Integer bookid);
 
-    public List<CategoryEntity> findByCategoryContains(String category){
-        List<CategoryEntity> categories = categoryRepository.findByCategoryContains(category);
-        Set<Integer> ids = new HashSet<>();
-        Iterator<CategoryEntity> iter = categories.iterator();
-        while (iter.hasNext()) {
-            CategoryEntity cate = iter.next();
-            if (ids.contains(cate.getBookid())) {
-                iter.remove();
-            }
-            else
-                ids.add(cate.getBookid());
-        }
-        return categories;
-    }
+    List<CategoryEntity> findByCategoryContains(String category);
 }

@@ -1,39 +1,20 @@
 package com.zzbslayer.bookstore.service;
 
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
-import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class UserService {
+public interface UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    List<UserEntity> findAll();
 
-    public List<UserEntity> findAll(){
-        return userRepository.findAll();
-    }
+    UserEntity findByEmail(String email);
 
-    public UserEntity findByEmail(String email){
-        return userRepository.findByEmail(email);
-    }
+    UserEntity findByUsername(String username);
 
-    public UserEntity findByUsername(String username){
-        return userRepository.findByUsername(username);
-    }
+    UserEntity save(UserEntity user);
 
-    public UserEntity save(UserEntity user){
-        return userRepository.save(user);
-    }
-
-    public UserEntity updateInfo(UserEntity user){
-        UserEntity toupdate = userRepository.findByUsername(user.getUsername());
-        toupdate.setEmail(user.getEmail());
-        toupdate.setPhone(user.getPhone());
-        toupdate.setAvatar(user.getAvatar());
-        return userRepository.save(toupdate);
-    }
+    UserEntity updateInfo(UserEntity user);
 }

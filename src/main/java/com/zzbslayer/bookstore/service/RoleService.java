@@ -1,30 +1,18 @@
 package com.zzbslayer.bookstore.service;
 
 import com.zzbslayer.bookstore.datamodel.domain.RoleEntity;
-import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RoleService {
-    @Autowired
-    private RoleRepository roleRepository;
+public interface RoleService {
 
-    public List<RoleEntity> findAll(){
-        return roleRepository.findAll();
-    }
+    List<RoleEntity> findAll();
 
-    public List<RoleEntity> findByUsername(String username){
-        return roleRepository.findByUsername(username);
-    }
+    List<RoleEntity> findByUsername(String username);
 
-    public List<RoleEntity> findByRolename(String rolename){
-        return roleRepository.findByRolename(rolename);
-    }
+    List<RoleEntity> findByRolename(String rolename);
 
-    public RoleEntity save(RoleEntity role){
-        return roleRepository.save(role);
-    }
+    RoleEntity save(RoleEntity role);
 }
