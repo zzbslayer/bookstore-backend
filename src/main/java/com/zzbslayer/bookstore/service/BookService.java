@@ -1,12 +1,10 @@
 package com.zzbslayer.bookstore.service;
 
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Service
 public interface BookService{
     List<BookEntity> findAll();
     BookEntity findByBookid(Integer bookid);

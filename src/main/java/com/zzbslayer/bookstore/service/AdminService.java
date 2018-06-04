@@ -3,11 +3,10 @@ package com.zzbslayer.bookstore.service;
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface AdminService {
     List<UserStatusEntity> findStatusAll();
     UserStatusEntity findStatusByUsername(String username);

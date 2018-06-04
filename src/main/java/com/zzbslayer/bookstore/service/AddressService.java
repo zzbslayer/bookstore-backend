@@ -1,11 +1,9 @@
 package com.zzbslayer.bookstore.service;
 
 import com.zzbslayer.bookstore.datamodel.domain.AddressEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface AddressService {
 
     List<AddressEntity> findAll();
