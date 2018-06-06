@@ -86,7 +86,7 @@ public class UserController {
     @ResponseBody
     public JSONArray getCart(){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<BookinCart> cart = cartService.findByUsername(name);
+        List<BookEntity> cart = cartService.findByUsername(name);
         return JSONArray.fromObject(cart);
     }
 
@@ -102,24 +102,27 @@ public class UserController {
         return JSONObject.fromObject(userService.updateInfo(user));
     }
 
+
     @PostMapping(value="/cart/delete")
     @ResponseBody
-    public void deleteCart(@RequestParam("cartid")Integer cartid){
-        cartService.deleteByCartid(cartid);
+    public JSONArray deleteCartByBookid(@RequestParam("bookid")Integer bookid){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return JSONArray.fromObject(cartService.deleteByBookid(bookid, name));
     }
+
 
     @PostMapping(value="/cart/save")
     @ResponseBody
-    public JSONObject addToCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
+    public JSONObject addCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return JSONObject.fromObject(cartService.addToCart(bookid, count, name));
+        return JSONObject.fromObject(cartService.addCart(bookid, count, name));
     }
 
     @PostMapping(value="/cart/update")
     @ResponseBody
     public JSONObject editCart(@RequestParam("bookid")Integer bookid, @RequestParam("count")Integer count){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        CartEntity cart = cartService.editCart(name, bookid, count);
+        Cart cart = cartService.editCart(name, bookid, count);
         return JSONObject.fromObject(cart);
     }
 

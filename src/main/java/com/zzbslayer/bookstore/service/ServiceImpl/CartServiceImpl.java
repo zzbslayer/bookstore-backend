@@ -3,13 +3,12 @@ package com.zzbslayer.bookstore.service.ServiceImpl;
 import com.zzbslayer.bookstore.datamodel.dao.BookRepository;
 import com.zzbslayer.bookstore.datamodel.dao.CartRepository;
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
-import com.zzbslayer.bookstore.datamodel.domain.CartEntity;
+import com.zzbslayer.bookstore.datamodel.domain.Cart;
 import com.zzbslayer.bookstore.service.CartService;
-import com.zzbslayer.bookstore.utils.BookinCart;
+import com.zzbslayer.bookstore.utils.BookidandCount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,64 +19,83 @@ public class CartServiceImpl implements CartService{
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private CartRepository cartRepository;
-    @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private CartRepository cartsRepository;
 
-    public void deleteByCartid(Integer cartid){
-        CartEntity cart = cartRepository.findByCartid(cartid);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (username.equals(cart.getUsername())){
-            cartRepository.delete(cart);
+    public Cart addCart(Integer bookid, Integer count, String username){
+        BookidandCount line = new BookidandCount();
+        line.setBookid(bookid);
+        line.setCount(count);
+        List<BookidandCount> cart;
+
+        Cart cartsEntity = cartsRepository.findByUsername(username);
+        if (cartsEntity == null){
+            cartsEntity = new Cart();
+            cartsEntity.setUsername(username);
+            cart = new ArrayList<>();
+            cart.add(line);
+            cartsEntity.setCart(cart);
+            cartsRepository.save(cartsEntity);
+            return cartsEntity;
         }
 
+        cart = cartsEntity.getCart();
+        boolean findflag = false;
+        for (BookidandCount i : cart){
+            if (i.getBookid() == bookid) {
+                i.setCount(i.getCount() + count);
+                findflag = true;
+                break;
+            }
+        }
+        if (!findflag){
+            cart.add(line);
+        }
+        cartsEntity.setCart(cart);
+        cartsRepository.save(cartsEntity);
+        return cartsEntity;
     }
 
-    public List<BookinCart> findByUsername(String username){
-        logger.debug(username+" attempted to get the cart");
-        List<CartEntity> cart = cartRepository.findByUsername(username);
-        logger.debug(cart.toString());
-        List<BookinCart> books = new ArrayList<>();
-        for (CartEntity temp : cart){
-            Integer id = temp.getBookid();
-            BookEntity book = bookRepository.findByBookid(id);
-            logger.debug(book.toString());
-            BookinCart bookinCart = new BookinCart();
+    public Cart deleteByBookid(Integer bookid, String username){
+        Cart cartsEntity = cartsRepository.findByUsername(username);
+        List<BookidandCount> cart = cartsEntity.getCart();
+        for (BookidandCount i : cart){
+            if (i.getBookid() == bookid){
+                cart.remove(i);
+                 cartsRepository.save(cartsEntity);
+                return cartsEntity;
+            }
+        }
+        logger.debug("Delete an unexisted book in the cart of user:"+username);
+        return null;
+    }
 
-            bookinCart.setCount(temp.getCount());
-            bookinCart.setCartid(temp.getCartid());
+    public List<BookEntity> findByUsername(String username){
 
-            bookinCart.setByBookEntity(book);
-
-            books.add(bookinCart);
+        Cart cartsEntity = cartsRepository.findByUsername(username);
+        List<BookEntity> books = new ArrayList<>();
+        List<BookidandCount> cart = cartsEntity.getCart();
+        for (BookidandCount i : cart){
+            Integer id = i.getBookid();
+            BookEntity bookEntity = bookRepository.findByBookid(id);
+            bookEntity.setCount(i.getCount());
+            books.add(bookEntity);
         }
         return books;
     }
 
-    public CartEntity addToCart(Integer bookid, Integer count, String username){
-        CartEntity cart = cartRepository.findByUsernameAndBookid(username,bookid);
-        if (cart==null){
-            cart = new CartEntity();
-            cart.setCartid(0);
-            cart.setUsername(username);
-            cart.setBookid(bookid);
-            cart.setCount(count);
-            return cartRepository.save(cart);
+    public Cart editCart(String username, Integer bookid, Integer count){
+        Cart cartEntity = cartsRepository.findByUsername(username);
+        List<BookidandCount> cart = cartEntity.getCart();
+        for (BookidandCount i : cart){
+            if (i.getBookid()==bookid){
+                i.setCount(count);
+                cartsRepository.save(cartEntity);
+                return cartEntity;
+            }
         }
-        else{
-            cart.setCount(cart.getCount()+count);
-            return cartRepository.save(cart);
-        }
-    }
-
-    public CartEntity editCart(String username, Integer bookid, Integer count){
-        CartEntity cart = cartRepository.findByUsernameAndBookid(username,bookid);
-        if (cart==null){
-            return null;
-        }
-        else{
-            cart.setCount(count);
-            return cartRepository.save(cart);
-        }
+        logger.debug("Edit an unexisted book in the cart of user:"+username);
+        return null;
     }
 }

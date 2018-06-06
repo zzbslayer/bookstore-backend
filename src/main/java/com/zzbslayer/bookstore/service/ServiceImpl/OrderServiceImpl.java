@@ -3,6 +3,7 @@ package com.zzbslayer.bookstore.service.ServiceImpl;
 import com.zzbslayer.bookstore.datamodel.dao.*;
 import com.zzbslayer.bookstore.datamodel.domain.*;
 import com.zzbslayer.bookstore.service.OrderService;
+import com.zzbslayer.bookstore.utils.BookidandCount;
 import com.zzbslayer.bookstore.utils.OrderwithBooks;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
@@ -72,15 +73,19 @@ public class OrderServiceImpl implements OrderService{
 
         Integer orderid = order.getOrderid();
         try{
+            Cart cart = cartRepository.findByUsername(name);
+            List<BookidandCount> temp = cart.getCart();
+
             for (String str : books){
                 OrderbookEntity book = new OrderbookEntity();
                 String[] array = str.split(";");
-                System.out.println(str);
-                System.out.println(array[0]);
+                //System.out.println(str);
+                //System.out.println(array[0]);
                 Integer bookid = Integer.parseInt(array[0]);
                 Integer amount = Integer.parseInt(array[1]);
-                System.out.println("bookid:"+bookid);
-                System.out.println("amount:"+amount);
+
+                //System.out.println("bookid:"+bookid);
+                //System.out.println("amount:"+amount);
 
                 BookEntity bookinfo = bookRepository.findByBookid(bookid);
                 Integer remain = bookinfo.getCount()-amount;
@@ -105,9 +110,14 @@ public class OrderServiceImpl implements OrderService{
 
                 orderbookRepository.save(book);
                 bookRepository.save(bookinfo);
-                CartEntity cart = cartRepository.findByUsernameAndBookid(name,bookinfo.getBookid());
-                if (cart!=null)
-                    cartRepository.delete(cart);
+
+                for (BookidandCount t : temp){
+                    if (t.getBookid()==bookid) {
+                        temp.remove(t);
+                        break;
+                    }
+                }
+                cartRepository.save(cart);
             }
         }
         catch(Exception e){
