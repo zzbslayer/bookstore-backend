@@ -74,8 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             authorities.add(authority.getAuthority());
                         };
                         PrintWriter out = httpServletResponse.getWriter();
-                        out.write("{\"status\":\"ok\",\"msg\":\"login success\",\"user\":"+ JSONObject.fromObject(userService.findByUsername(username)).toString()+
-                                ",\"role\":"+ JSONArray.fromObject(authorities).toString()+"}");
+                        out.write("{\"status\":\"ok\",\"msg\":\"login success\",\"user\":"+ JSONObject.fromObject(userService.findByUsername(username)).toString()+ "}");
                         out.flush();
                         out.close();
                     }

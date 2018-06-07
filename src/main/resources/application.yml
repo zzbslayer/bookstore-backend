@@ -3,9 +3,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.106.8.44:3306/bookstore?&useSSL=false
-    username: zzbslayer
-    password: dsgwzd826525
+    url: jdbc:mysql://localhost:3306/bookstore?&useSSL=false
+    username: root
+    password: wjwjswzd
   # 配置初始化大小、最小、最大
     initialSize: 5
     minIdle: 5

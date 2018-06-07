@@ -21,7 +21,6 @@ public class Cart implements Serializable {
     private BigInteger id;
 
     @Indexed(unique=true)
-    @JsonIgnore
     private String username;
 
     private List<BookidandCount> cart;

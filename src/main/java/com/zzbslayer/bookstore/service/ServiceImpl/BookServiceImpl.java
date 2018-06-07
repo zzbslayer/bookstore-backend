@@ -1,9 +1,7 @@
 package com.zzbslayer.bookstore.service.ServiceImpl;
 
 import com.zzbslayer.bookstore.datamodel.dao.BookRepository;
-import com.zzbslayer.bookstore.datamodel.dao.OrderbookRepository;
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
-import com.zzbslayer.bookstore.datamodel.domain.OrderbookEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +12,6 @@ import java.util.List;
 public class BookServiceImpl implements com.zzbslayer.bookstore.service.BookService{
     @Autowired
     private BookRepository bookRepository;
-    @Autowired
-    private OrderbookRepository orderbookRepository;
 
     public List<BookEntity> findAll(){
         return bookRepository.findAll();
@@ -48,14 +44,5 @@ public class BookServiceImpl implements com.zzbslayer.bookstore.service.BookServ
         array1.removeAll(array2);
         array1.addAll(array2);
         return array1;
-    }
-
-    public Integer getSales(Integer bookid){
-        List<OrderbookEntity> books = orderbookRepository.findByBookid(bookid);
-        Integer sum = 0;
-        for (OrderbookEntity book: books){
-            sum += book.getAmount();
-        }
-        return sum;
     }
 }

@@ -11,6 +11,8 @@ public class UserEntity {
     private String email;
     private String phone;
     private String avatar;
+    private String rolename;
+    private String status;
 
     @Id
     @Column(name = "userid", nullable = false)
@@ -23,7 +25,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 20)
+    @Column(name = "username", nullable = false, length = 20, unique = true)
     public String getUsername() {
         return username;
     }
@@ -63,13 +65,33 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "avatar", nullable = true)
+    @Column(name = "avatar", nullable = true, length = 50000)
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    @Basic
+    @Column(name = "rolename", nullable = false, length = 20)
+    public String getRolename() {
+        return rolename;
+    }
+
+    public void setRolename(String rolename) {
+        this.rolename = rolename;
+    }
+
+    @Basic
+    @Column(name = "status", nullable = false, length = 20)
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -85,6 +107,8 @@ public class UserEntity {
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
+        if (rolename != null ? !rolename.equals(that.rolename) : that.rolename != null) return false;
+        if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
         return true;
     }
@@ -97,6 +121,8 @@ public class UserEntity {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (rolename != null ? rolename.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 }

@@ -1,11 +1,7 @@
 package com.zzbslayer.bookstore.service.ServiceImpl;
 
-import com.zzbslayer.bookstore.datamodel.dao.RoleRepository;
 import com.zzbslayer.bookstore.datamodel.dao.UserRepository;
-import com.zzbslayer.bookstore.datamodel.dao.UserStatusRepository;
-import com.zzbslayer.bookstore.datamodel.domain.RoleEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
-import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
 import com.zzbslayer.bookstore.service.RegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegisterServiceImpl implements RegisterService{
     @Autowired
-    private UserStatusRepository userStatusRepository;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -36,21 +28,11 @@ public class RegisterServiceImpl implements RegisterService{
         user.setEmail(email);
         user.setPhone(phone);
         user.setAvatar("null");
+        user.setRolename("USER");
+        user.setStatus("NORMAL");
 
-        RoleEntity role = new RoleEntity();
-        role.setRoleid(0);
-        role.setRolename("USER");
-        role.setUsername(user.getUsername());
         try {
-            UserStatusEntity userStatus = new UserStatusEntity();
-            userStatus.setStatusid(0);
-            userStatus.setUsername(username);
-            userStatus.setUserStatus("NORMAL");
-
             UserEntity newUser = userRepository.save(user);
-            userStatusRepository.save(userStatus);
-            roleRepository.save(role);
-
             return newUser;
         }
         catch(Exception e){

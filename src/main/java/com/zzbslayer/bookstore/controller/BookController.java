@@ -75,25 +75,4 @@ public class BookController {
         List<BookEntity> books = bookService.accurateFind(bookname,author,lang,down_price,up_price,down_year,up_year);
         return JSONArray.fromObject(books);
     }
-
-    @GetMapping(value="/sales/{bookid}")
-    @ResponseBody
-    public Integer getSales(@PathVariable("bookid")Integer bookid){
-        return bookService.getSales(bookid);
-    }
-
-
-    /*
-    @RequestMapping("saveBookEntity")
-    @ResponseBody
-    public void saveBookEntity() {
-        BookEntity u = new BookEntity();
-        u.setBookname("Evan_song");
-        u.setPw("xixixi");
-        u.setEmail("evansong@sjtu.edu.cn");
-        u.setPhone("18033245325");
-        u.setPermission("user");
-        userRepository.save(u);
-    }
-    */
 }

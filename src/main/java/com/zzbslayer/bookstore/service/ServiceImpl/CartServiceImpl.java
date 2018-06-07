@@ -74,6 +74,13 @@ public class CartServiceImpl implements CartService{
     public List<BookEntity> findByUsername(String username){
 
         Cart cartsEntity = cartsRepository.findByUsername(username);
+        if (cartsEntity == null){
+            cartsEntity = new Cart();
+            cartsEntity.setCart(new ArrayList<>());
+            cartsEntity.setUsername(username);
+            cartsRepository.save(cartsEntity);
+            return null;
+        }
         List<BookEntity> books = new ArrayList<>();
         List<BookidandCount> cart = cartsEntity.getCart();
         for (BookidandCount i : cart){

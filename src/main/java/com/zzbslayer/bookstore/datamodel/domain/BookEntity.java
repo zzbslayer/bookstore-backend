@@ -2,7 +2,6 @@ package com.zzbslayer.bookstore.datamodel.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Entity
 @Table(name = "books", schema = "bookstore", catalog = "")

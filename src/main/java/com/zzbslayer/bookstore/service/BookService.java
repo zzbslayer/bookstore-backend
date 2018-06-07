@@ -14,6 +14,4 @@ public interface BookService{
 
     List<BookEntity> accurateFind(String bookname, String author, String lang, BigDecimal down_price, BigDecimal up_price, Integer down_year, Integer up_year);
     List<BookEntity> VagueFind(String msg);
-    Integer getSales(Integer bookid);
-
 }

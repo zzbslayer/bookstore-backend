@@ -1,12 +1,12 @@
 package com.zzbslayer.bookstore.service;
 
 import com.zzbslayer.bookstore.datamodel.domain.*;
-import com.zzbslayer.bookstore.utils.OrderwithBooks;
+import com.zzbslayer.bookstore.utils.AddressRow;
 
 import java.util.List;
 
 public interface OrderService {
-    List<OrderwithBooks> findOrderByUsername(String username);
+    List<Order> findOrderByUsername(String username);
 
-    UserorderEntity addOrder(List<String> books, Integer addressid);
+    Order addOrder(List<String> books, String shippingaddress, String recipient, String phone);
 }

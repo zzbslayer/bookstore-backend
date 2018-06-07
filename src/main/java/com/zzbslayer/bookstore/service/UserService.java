@@ -8,8 +8,6 @@ public interface UserService {
 
     List<UserEntity> findAll();
 
-    UserEntity findByEmail(String email);
-
     UserEntity findByUsername(String username);
 
     UserEntity save(UserEntity user);

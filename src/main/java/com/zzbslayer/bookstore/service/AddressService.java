@@ -1,18 +1,15 @@
 package com.zzbslayer.bookstore.service;
 
-import com.zzbslayer.bookstore.datamodel.domain.AddressEntity;
-
-import java.util.List;
+import com.zzbslayer.bookstore.datamodel.domain.Address;
+import com.zzbslayer.bookstore.utils.AddressRow;
 
 public interface AddressService {
 
-    List<AddressEntity> findAll();
+    Address findByUsername(String username);
 
-    List<AddressEntity> findByUsername(String username);
+    Address deleteAddress(Integer addressid);
 
-    void deleteAddress(Integer addressid);
+    Address updateAddress(AddressRow addr);
 
-    AddressEntity updateAddress(AddressEntity addr);
-
-    AddressEntity save (AddressEntity addr);
+    Address save (AddressRow addr);
 }

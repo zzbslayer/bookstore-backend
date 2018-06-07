@@ -1,12 +1,14 @@
 package com.zzbslayer.bookstore.service.ServiceImpl;
 
 import com.zzbslayer.bookstore.datamodel.dao.AddressRepository;
-import com.zzbslayer.bookstore.datamodel.domain.AddressEntity;
+import com.zzbslayer.bookstore.datamodel.domain.Address;
 import com.zzbslayer.bookstore.service.AddressService;
+import com.zzbslayer.bookstore.utils.AddressRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,31 +16,58 @@ public class AddressServiceImpl implements AddressService{
     @Autowired
     private AddressRepository addressRepository;
 
-    public List<AddressEntity> findAll(){ return addressRepository.findAll();}
-    public List<AddressEntity> findByUsername(String username){
-        return addressRepository.findByUsername(username);
-    }
-
-    public void deleteAddress(Integer addressid){
-        AddressEntity addr = addressRepository.findByAddressid(addressid);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (username.equals(addr.getUsername()))
-            addressRepository.delete(addr);
-    }
-
-    public AddressEntity updateAddress(AddressEntity addr){
-        AddressEntity address = addressRepository.findByAddressid(addr.getAddressid());
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (username.equals(address.getUsername())){
-            addr.setUsername(username);
-            return addressRepository.save(addr);
+    public Address findByUsername(String username){
+        Address address = addressRepository.findByUsername(username);
+        if (address == null){
+            address = new Address();
+            address.setUsername(username);
+            address.setAddresses(new ArrayList<>());
+            addressRepository.save(address);
         }
-        return null;
+        return address;
     }
 
-    public AddressEntity save (AddressEntity addr){
-        AddressEntity add =  addressRepository.save(addr);
+    public Address deleteAddress(Integer addressid){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return addressRepository.findByUsernameAndShippingaddressAndRecipientAndPhone(name,add.getShippingaddress(),add.getRecipient(),add.getPhone());
+        Address address = addressRepository.findByUsername(name);
+        List<AddressRow> addressRows = address.getAddresses();
+        for (AddressRow i : addressRows){
+            if (i.getAddressid() == addressid){
+                addressRows.remove(i);
+                break;
+            }
+        }
+        return addressRepository.save(address);
+    }
+
+    public Address updateAddress(AddressRow addr){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Address address = addressRepository.findByUsername(name);
+        List<AddressRow> addressRows = address.getAddresses();
+        for (AddressRow i : addressRows) {
+            if (i.getAddressid()==addr.getAddressid()){
+                i.update(addr);
+                break;
+            }
+        }
+        return addressRepository.save(address);
+    }
+
+    public Address save (AddressRow addr){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        Address address = addressRepository.findByUsername(name);
+
+        List<AddressRow> addressRows;
+
+        if (address==null){
+            address = new Address();
+            address.setUsername(name);
+            addressRows = new ArrayList<>();
+        }
+        else
+            addressRows = address.getAddresses();
+        addr.setAddressid(addressRows.get(addressRows.size()-1).getAddressid()+1);
+        addressRows.add(addr);
+        return addressRepository.save(address);
     }
 }

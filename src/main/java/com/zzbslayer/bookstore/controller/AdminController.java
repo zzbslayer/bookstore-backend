@@ -2,7 +2,6 @@ package com.zzbslayer.bookstore.controller;
 
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
-import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
 import com.zzbslayer.bookstore.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,50 +18,29 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping(value="/userstatus")
+    @GetMapping(value="/users")
     @ResponseBody
     public JSONArray findAll(){
-        List<UserStatusEntity> userstatus = adminService.findStatusAll();
-        return JSONArray.fromObject(userstatus);
+        List<UserEntity> users = adminService.findUserAll();
+        return JSONArray.fromObject(users);
     }
 
-    @PostMapping(value="/userstatus/ban")
+    @PostMapping(value="/users/ban")
     @ResponseBody
     public JSONObject ban(@RequestParam("username")String username){
         return JSONObject.fromObject(adminService.ban(username));
     }
 
-    @PostMapping(value="/userstatus/restore")
+    @PostMapping(value="/users/restore")
     @ResponseBody
     public JSONObject restore(@RequestParam("username")String username){
         return JSONObject.fromObject(adminService.restore(username));
     }
 
-    @PostMapping(value="/userstatus/delete")
+    @PostMapping(value="/user/delete")
     @ResponseBody
     public void deleteUser(@RequestParam("username")String username){
         adminService.deleteUser(username);
-    }
-
-    @GetMapping(value="/userstatus/{username}")
-    @ResponseBody
-    public JSONObject findStatusByUsername(@PathVariable String username) {
-        UserStatusEntity user = adminService.findStatusByUsername(username);
-        return JSONObject.fromObject(user);
-    }
-
-    @GetMapping(value="/users/username/{username}")
-    @ResponseBody
-    public JSONObject findUserByUsername(@PathVariable String username){
-        UserEntity user = adminService.findUserByUsername(username);
-        return JSONObject.fromObject(user);
-    }
-
-    @GetMapping(value="/users/email/{email}")
-    @ResponseBody
-    public JSONObject findUserByEmail(@PathVariable String email){
-        UserEntity user = adminService.findUserByEmail(email);
-        return JSONObject.fromObject(user);
     }
 
     @PostMapping(value="/books/update")

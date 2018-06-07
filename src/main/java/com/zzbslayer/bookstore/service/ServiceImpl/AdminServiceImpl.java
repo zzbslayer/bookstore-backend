@@ -4,7 +4,6 @@ import com.zzbslayer.bookstore.datamodel.dao.*;
 import com.zzbslayer.bookstore.datamodel.domain.BookEntity;
 import com.zzbslayer.bookstore.datamodel.domain.CategoryEntity;
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
-import com.zzbslayer.bookstore.datamodel.domain.UserStatusEntity;
 import com.zzbslayer.bookstore.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,51 +13,30 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService{
     @Autowired
-    private UserStatusRepository userStatusRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private UserRepository userRepository;
 
-    public List<UserStatusEntity> findStatusAll(){
-        return userStatusRepository.findAll();
+
+
+    public UserEntity ban(String username){
+        UserEntity user = userRepository.findByUsername(username);
+        user.setStatus("BAN");
+        userRepository.save(user);
+        return user;
     }
 
-    public UserStatusEntity findStatusByUsername(String username) {
-        return userStatusRepository.findByUsername(username);
-    }
-
-    public UserStatusEntity ban(String username){
-        UserStatusEntity status = userStatusRepository.findByUsername(username);
-        if (status==null)
-            return null;
-        status.setUserStatus("BAN");
-        userStatusRepository.save(status);
-        return status;
-    }
-
-    public UserStatusEntity restore(String username) {
-        UserStatusEntity status = userStatusRepository.findByUsername(username);
-        if (status==null)
-            return null;
-        status.setUserStatus("NORMAL");
-        userStatusRepository.save(status);
-        return status;
+    public UserEntity restore(String username) {
+        UserEntity user = userRepository.findByUsername(username);
+        user.setStatus("NORMAL");
+        userRepository.save(user);
+        return user;
     }
 
     public void deleteUser(String username){
-        roleRepository.deleteAll(roleRepository.findByUsername(username));
-        userStatusRepository.delete(userStatusRepository.findByUsername(username));
-        userRepository.delete(userRepository.findByUsername(username));
+        userRepository.deleteByUsername(username);
     }
-
-    @Autowired
-    private UserRepository userRepository;
 
     public List<UserEntity> findUserAll(){
         return userRepository.findAll();
-    }
-
-    public UserEntity findUserByEmail(String email){
-        return userRepository.findByEmail(email);
     }
 
     public UserEntity findUserByUsername(String username){
