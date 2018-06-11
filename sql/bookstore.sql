@@ -34,17 +34,3 @@ create table users
 	    primary key (userid)
 	);
 
-create table orderbooks
-    (
-        obid        integer NOT NULL AUTO_INCREMENT,
-        bookid      integer NOT NULL,
-        bookname    varchar(70) NOT NULL,
-        author	    varchar(40) NOT NULL,
-        lang	    varchar(20) NOT NULL,
-        price       numeric(7,2) NOT NULL,
-        year        numeric(4,0) NOT NULL,
-        amount      numeric(5,0) NOT NULL,
-        imgsrc      varchar(500) NOT NULL,
-        primary key (obid, bookid),
-    );
-
