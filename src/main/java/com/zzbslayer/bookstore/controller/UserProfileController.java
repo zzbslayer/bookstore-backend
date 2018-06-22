@@ -1,5 +1,7 @@
 package com.zzbslayer.bookstore.controller;
 
+import com.zzbslayer.bookstore.datamodel.dao.AvatarRepository;
+import com.zzbslayer.bookstore.datamodel.domain.Avatar;
 import com.zzbslayer.bookstore.datamodel.domain.UserEntity;
 import com.zzbslayer.bookstore.service.UserService;
 import net.sf.json.JSONObject;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserProfileController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AvatarRepository avatarRepository;
 
     @GetMapping(value="/")
     @ResponseBody
@@ -31,5 +35,12 @@ public class UserProfileController {
         user.setPhone(phone);
         user.setAvatar(avatar);
         return JSONObject.fromObject(userService.updateInfo(user));
+    }
+
+    @GetMapping(value="/avatar")
+    @ResponseBody
+    public JSONObject getAvatar(){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        return JSONObject.fromObject(avatarRepository.findByUsername(name));
     }
 }

@@ -5,9 +5,10 @@ create table books
 	    author	    varchar(40) NOT NULL,
 	    lang	    varchar(20) NOT NULL,
         price       numeric(7,2) NOT NULL,
-        year        numeric(4,0) NOT NULL,
-        count       numeric(5,0) NOT NULL,
+        year        INTEGER NOT NULL,
+        count       INTEGER NOT NULL,
         imgsrc  varchar(500) NOT NULL,
+        sales       integer NOT NULL,
 	    primary key (bookid)
 	);
 
@@ -28,7 +29,6 @@ create table users
 	    pw		        varchar(64) NOT NULL,
 	    email		    varchar(50) NOT NULL UNIQUE,
         phone           varchar(20) NOT NULL UNIQUE,
-        avatar          varchar(50000),
         rolename        varchar(20) NOT NULL,
         status          varchar(20) NOT NULL,
 	    primary key (userid)

@@ -14,6 +14,7 @@ public class BookEntity {
     private int year;
     private int count;
     private String imgsrc;
+    private int sales;
 
     @Id
     @Column(name = "bookid", nullable = false)
@@ -66,7 +67,7 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "year", nullable = false, precision = 0)
+    @Column(name = "year", nullable = false)
     public int getYear() {
         return year;
     }
@@ -76,7 +77,7 @@ public class BookEntity {
     }
 
     @Basic
-    @Column(name = "count", nullable = false, precision = 0)
+    @Column(name = "count", nullable = false)
     public int getCount() {
         return count;
     }
@@ -95,6 +96,16 @@ public class BookEntity {
         this.imgsrc = imgsrc;
     }
 
+    @Basic
+    @Column(name = "sales", nullable = false)
+    public int getSales() {
+        return sales;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,6 +116,7 @@ public class BookEntity {
         if (bookid != that.bookid) return false;
         if (year != that.year) return false;
         if (count != that.count) return false;
+        if (sales != that.sales) return false;
         if (bookname != null ? !bookname.equals(that.bookname) : that.bookname != null) return false;
         if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (lang != null ? !lang.equals(that.lang) : that.lang != null) return false;
@@ -124,6 +136,7 @@ public class BookEntity {
         result = 31 * result + year;
         result = 31 * result + count;
         result = 31 * result + (imgsrc != null ? imgsrc.hashCode() : 0);
+        result = 31 * result + sales;
         return result;
     }
 }

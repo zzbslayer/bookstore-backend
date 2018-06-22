@@ -10,9 +10,19 @@ public class UserEntity {
     private String pw;
     private String email;
     private String phone;
-    private String avatar;
     private String rolename;
     private String status;
+
+    @Transient
+    private String avatar;
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
 
     @Id
     @Column(name = "userid", nullable = false)
@@ -25,7 +35,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "username", nullable = false, length = 20, unique = true)
+    @Column(name = "username", nullable = false, length = 20)
     public String getUsername() {
         return username;
     }
@@ -65,16 +75,6 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "avatar", nullable = true, length = 50000)
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
-
-    @Basic
     @Column(name = "rolename", nullable = false, length = 20)
     public String getRolename() {
         return rolename;
@@ -106,7 +106,6 @@ public class UserEntity {
         if (pw != null ? !pw.equals(that.pw) : that.pw != null) return false;
         if (email != null ? !email.equals(that.email) : that.email != null) return false;
         if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
-        if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
         if (rolename != null ? !rolename.equals(that.rolename) : that.rolename != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
@@ -120,7 +119,6 @@ public class UserEntity {
         result = 31 * result + (pw != null ? pw.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
         result = 31 * result + (rolename != null ? rolename.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;

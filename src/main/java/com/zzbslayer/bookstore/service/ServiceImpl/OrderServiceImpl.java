@@ -55,12 +55,14 @@ public class OrderServiceImpl implements OrderService{
 
                 BookEntity bookinfo = bookRepository.findByBookid(bookid);
                 Integer remain = bookinfo.getCount()-count;
+                Integer sales = bookinfo.getSales()+count;
                 if (remain<0){
                     logger.debug("Inventory Not Enough");
                     logger.debug("User: "+name+" tend to buy "+count+" "+bookinfo.getBookname());
                     throw new Exception("Inventory Not Enough");
                 }
                 bookinfo.setCount(remain);
+                bookinfo.setSales(sales);
 
                 System.out.println(JSONObject.fromObject(bookinfo).toString());
 
