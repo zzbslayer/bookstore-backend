@@ -22,6 +22,8 @@ public class UserCartController {
     public JSONArray getCart(){
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         List<BookEntity> cart = cartService.findByUsername(name);
+        if (cart==null)
+            return null;
         return JSONArray.fromObject(cart);
     }
 

@@ -40,6 +40,10 @@ public class OrderServiceImpl implements OrderService{
         List<BookEntity> orderbooks = new ArrayList<>();
         try{
             Cart cart = cartRepository.findByUsername(name);
+            boolean flag = true;
+            if (cart == null){
+                flag = false;
+            }
             List<BookidandCount> temp = cart.getCart();
 
             for (String str : books){
@@ -77,13 +81,15 @@ public class OrderServiceImpl implements OrderService{
 
                 orderbooks.add(book);
                 bookRepository.save(bookinfo);
-                for (BookidandCount t : temp){
-                    if (t.getBookid()==bookid) {
-                        temp.remove(t);
-                        break;
+                if (flag) {
+                    for (BookidandCount t : temp) {
+                        if (t.getBookid() == bookid) {
+                            temp.remove(t);
+                            break;
+                        }
                     }
+                    cartRepository.save(cart);
                 }
-                cartRepository.save(cart);
             }
         }
         catch(Exception e){

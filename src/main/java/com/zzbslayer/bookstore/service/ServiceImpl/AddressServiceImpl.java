@@ -59,15 +59,24 @@ public class AddressServiceImpl implements AddressService{
 
         List<AddressRow> addressRows;
 
-        if (address==null){
+        if (address == null){
             address = new Address();
             address.setUsername(name);
+
             addressRows = new ArrayList<>();
+            addr.setAddressid(1);
         }
-        else
+        else if (address.getAddresses().size()==0){
+            address.setUsername(name);
+            addressRows = new ArrayList<>();
+            addr.setAddressid(1);
+        }
+        else {
             addressRows = address.getAddresses();
-        addr.setAddressid(addressRows.get(addressRows.size()-1).getAddressid()+1);
+            addr.setAddressid(addressRows.get(addressRows.size() - 1).getAddressid() + 1);
+        }
         addressRows.add(addr);
+        address.setAddresses(addressRows);
         return addressRepository.save(address);
     }
 }
